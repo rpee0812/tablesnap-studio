@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free OBS Singing Stream Setlist &amp; YouTube Timestamp Generator (No Login) — HoshiDesk Studio</title>
+  <meta name="description" content="Free 100% browser-local OBS singing stream setlist &amp; YouTube chapter timestamp generator. Track songs live with a stream timer, preview a Sakura Stage Now Singing badge, and 1-click copy YouTube timestamps. No login required." />
+  <link rel="canonical" href="https://rpee0812.github.io/tablesnap-studio/obs-singing-setlist.html" />
+  <meta property="og:title" content="Free OBS Singing Stream Setlist &amp; YouTube Timestamp Generator (No Login) — HoshiDesk Studio" />
+  <meta property="og:description" content="Interactive VTuber karaoke &amp; singing stream setlist manager with live stream timer, Sakura Stage Now Singing preview, and 1-click YouTube chapter timestamps." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://rpee0812.github.io/tablesnap-studio/obs-singing-setlist.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Free OBS Singing Stream Setlist & YouTube Timestamp Generator",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Web, Windows, macOS, Linux (OBS Studio)",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free 100% browser-local OBS singing stream setlist tracker and YouTube chapter timestamp generator with live Sakura Stage Now Singing badge preview."
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --panel: #131c31;
+      --panel-2: #0f172a;
+      --border: #28354f;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #6366f1;
+      --primary-h: #4f46e5;
+      --accent: #22d3ee;
+      --green: #10b981;
+      --pink: #f43f5e;
+      --amber: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 20% 0%, #1e1b4b 0%, var(--bg) 48%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    .wrap { max-width: 1140px; margin: 0 auto; padding: 0 22px 64px; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+      padding: 20px 0; border-bottom: 1px solid rgba(51,65,85,0.5); margin-bottom: 30px;
+    }
+    .brand { font-weight: 800; font-size: 17px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; }
+    .brand-dot { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg, #6366f1, #22d3ee); display: inline-flex; align-items: center; justify-content: center; color: #0b1120; font-weight: 900; font-size: 13px; }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 18px; font-size: 14px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-weight: 600; }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+
+    .hero { margin-bottom: 24px; }
+    .pill {
+      display: inline-block; padding: 5px 13px; border-radius: 999px;
+      background: rgba(255,122,162,0.14); border: 1px solid rgba(255,122,162,0.45);
+      color: #fbcfe8; font-size: 11.5px; font-weight: 800; letter-spacing: 0.04em; margin-bottom: 12px;
+    }
+    h1 { font-size: clamp(26px, 4vw, 38px); line-height: 1.16; letter-spacing: -0.025em; margin-bottom: 10px; }
+    .sub { color: var(--muted); font-size: 15px; max-width: 820px; }
+
+    .studio-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 20px; align-items: start; margin-bottom: 28px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 20px;
+    }
+    .card-title { font-size: 15px; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+    .badge-free { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: rgba(16,185,129,0.16); border: 1px solid rgba(16,185,129,0.45); color: #6ee7b7; }
+    .badge-pro { font-size: 10.5px; font-weight: 800; padding: 2px 7px; border-radius: 999px; background: rgba(245,158,11,0.18); border: 1px solid rgba(245,158,11,0.45); color: #fde68a; }
+
+    /* Live Stream Timer */
+    .timer-box {
+      background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px;
+      padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+      margin-bottom: 16px;
+    }
+    .timer-left { display: flex; align-items: center; gap: 12px; }
+    .timer-clock {
+      font-family: Consolas, "Courier New", monospace; font-size: 28px; font-weight: 900;
+      letter-spacing: 0.04em; color: #fff;
+    }
+    .timer-state {
+      font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 999px;
+      background: rgba(148,163,184,0.16); color: #cbd5e1; border: 1px solid rgba(148,163,184,0.35);
+    }
+    .timer-state.running {
+      background: rgba(244,63,94,0.18); color: #fda4af; border-color: rgba(244,63,94,0.55);
+    }
+    .timer-controls { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* Add Song Form */
+    .add-form { display: grid; grid-template-columns: 1fr 0.85fr auto; gap: 8px; margin-bottom: 14px; }
+    input[type="text"] {
+      width: 100%; padding: 9px 11px; border-radius: 9px; border: 1px solid var(--border);
+      background: var(--panel-2); color: #f8fafc; font-size: 13.5px; font-family: inherit;
+    }
+    input[type="text"]:focus { outline: none; border-color: var(--primary); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 9px 14px; border-radius: 9px; border: 1px solid var(--border);
+      background: #1e293b; color: #f8fafc; font-weight: 700; font-size: 13px;
+      cursor: pointer; text-decoration: none; transition: background 0.14s, border-color 0.14s, filter 0.14s;
+      white-space: nowrap;
+    }
+    .btn:hover { background: #273549; }
+    .btn-sm { padding: 6px 10px; font-size: 12px; border-radius: 8px; }
+    .btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-h); }
+    .btn-sakura { background: linear-gradient(135deg, #ec4899, #f43f5e); border-color: transparent; color: #fff; }
+    .btn-sakura:hover { filter: brightness(1.08); }
+    .btn-booth { background: rgba(244,63,94,0.14); color: #fda4af; border: 1px solid rgba(244,63,94,0.45); }
+    .btn-booth:hover { background: rgba(244,63,94,0.24); color: #fff; }
+    .btn-free { background: rgba(16,185,129,0.14); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.45); }
+    .btn-free:hover { background: rgba(16,185,129,0.24); color: #fff; }
+    .btn-danger { background: rgba(239,68,68,0.12); color: #fca5a5; border-color: rgba(239,68,68,0.35); }
+    .btn-danger:hover { background: rgba(239,68,68,0.25); color: #fff; }
+
+    /* Song List */
+    .song-list { display: flex; flex-direction: column; gap: 8px; max-height: 410px; overflow-y: auto; padding-right: 2px; }
+    .song-item {
+      display: grid; grid-template-columns: 30px 1fr auto auto auto; gap: 8px; align-items: center;
+      background: rgba(15,23,42,0.78); border: 1px solid var(--border); border-radius: 11px;
+      padding: 10px 11px; transition: border-color 0.14s, background 0.14s;
+    }
+    .song-item.is-active {
+      border-color: #ff7aa2; background: rgba(236,72,153,0.12);
+      box-shadow: 0 0 0 1px rgba(255,122,162,0.28);
+    }
+    .song-idx { font-size: 12px; font-weight: 800; color: var(--muted); text-align: center; }
+    .song-item.is-active .song-idx { color: #fbcfe8; }
+    .song-info { min-width: 0; }
+    .song-title { font-size: 13.5px; font-weight: 800; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .song-artist { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .song-ts {
+      font-family: Consolas, monospace; font-size: 12px; font-weight: 700;
+      padding: 3px 8px; border-radius: 6px; background: rgba(34,211,238,0.1);
+      color: #67e8f9; border: 1px solid rgba(34,211,238,0.3);
+    }
+    .song-ts.empty { background: rgba(51,65,85,0.4); color: #64748b; border-color: transparent; }
+    .empty-msg {
+      text-align: center; padding: 28px 16px; color: var(--muted); font-size: 13.5px;
+      border: 1px dashed var(--border); border-radius: 11px;
+    }
+    .list-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; flex-wrap: wrap; gap: 8px; }
+    .list-meta { font-size: 12px; color: var(--muted); }
+
+    /* Sakura Stage OBS Preview */
+    .stage-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .swatches { display: flex; gap: 6px; align-items: center; }
+    .swatch { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.28); cursor: pointer; transition: transform 0.12s; }
+    .swatch:hover { transform: scale(1.14); }
+    .obs-stage {
+      --sakura-accent: #ff7aa2;
+      border-radius: 14px; border: 1px solid var(--border); overflow: hidden;
+      background-color: #0b0f1c;
+      background-image:
+        linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,0.03) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.03) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.03) 75%);
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+      padding: 24px 18px;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 158px; margin-bottom: 16px;
+    }
+
+    @keyframes eqBounce {
+      0%, 100% { height: 6px; }
+      50% { height: 22px; }
+    }
+    .sakura-badge {
+      width: 100%; max-width: 440px;
+      background: linear-gradient(135deg, rgba(31, 20, 40, 0.94), rgba(18, 16, 36, 0.94));
+      border: 2px solid var(--sakura-accent);
+      border-left: 7px solid var(--sakura-accent);
+      border-radius: 16px;
+      padding: 14px 18px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), 0 0 24px color-mix(in srgb, var(--sakura-accent) 26%, transparent);
+      position: relative;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .sakura-badge::after {
+      content: "✿";
+      position: absolute; top: 8px; right: 12px;
+      color: var(--sakura-accent); opacity: 0.7; font-size: 14px;
+    }
+    .eq-wrap {
+      width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0;
+      background: color-mix(in srgb, var(--sakura-accent) 18%, #131c31);
+      border: 1px solid color-mix(in srgb, var(--sakura-accent) 55%, transparent);
+      display: flex; align-items: flex-end; justify-content: center; gap: 3px; padding-bottom: 8px;
+    }
+    .eq-bar {
+      width: 4px; border-radius: 3px; background: var(--sakura-accent);
+      height: 12px;
+      animation: eqBounce 0.9s ease-in-out infinite;
+    }
+    .eq-bar:nth-child(2) { animation-delay: 0.18s; animation-duration: 0.72s; }
+    .eq-bar:nth-child(3) { animation-delay: 0.36s; animation-duration: 1.05s; }
+    .eq-bar:nth-child(4) { animation-delay: 0.12s; animation-duration: 0.84s; }
+    .sakura-badge.idle .eq-bar { animation: none; height: 6px; opacity: 0.5; }
+    .badge-content { flex: 1; min-width: 0; }
+    .badge-kicker {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 10.5px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--sakura-accent); margin-bottom: 3px;
+    }
+    .badge-song {
+      font-size: 18px; font-weight: 900; color: #fff6fa; line-height: 1.25;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .badge-artist {
+      font-size: 13px; font-weight: 600; color: #fbcfe8; opacity: 0.88;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .badge-meta {
+      margin-top: 5px; font-size: 11px; font-family: Consolas, monospace; color: #cbd5e1;
+    }
+
+    /* YouTube Timestamp Box */
+    textarea#timestampOutput {
+      width: 100%; height: 188px; background: #070b14; border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px; color: #e2e8f0; font-family: Consolas, monospace;
+      font-size: 13px; line-height: 1.6; resize: vertical;
+    }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .copy-status { font-size: 12.5px; color: #34d399; font-weight: 700; min-height: 20px; margin-top: 8px; }
+
+    /* Upgrade Cards */
+    .section-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; margin: 34px 0 16px; }
+    .section-head h2 { font-size: 23px; letter-spacing: -0.02em; }
+    .section-head p { font-size: 14px; color: var(--muted); }
+    .upgrade-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 30px; }
+    .up-card {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 15px; padding: 20px;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 14px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .up-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .up-card.featured {
+      border-color: rgba(244,63,94,0.55);
+      background: linear-gradient(160deg, rgba(244,63,94,0.12), var(--panel) 55%);
+    }
+    .up-tag { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 6px; }
+    .up-card h3 { font-size: 17px; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .up-card p { font-size: 13.5px; color: var(--muted); }
+    .up-list { list-style: none; display: flex; flex-direction: column; gap: 5px; font-size: 13px; color: #e2e8f0; margin-top: 10px; }
+
+    .howto { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 22px; margin-bottom: 36px; }
+    .howto h2 { font-size: 18px; margin-bottom: 12px; }
+    .howto ol { padding-left: 20px; color: #cbd5e1; font-size: 14px; display: flex; flex-direction: column; gap: 7px; }
+    footer { text-align: center; padding-top: 24px; border-top: 1px solid rgba(51,65,85,0.5); font-size: 13px; color: var(--muted); }
+    footer a { color: #a5b4fc; text-decoration: none; }
+
+    @media (max-width: 900px) { .studio-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 560px) {
+      .add-form { grid-template-columns: 1fr; }
+      .song-item { grid-template-columns: 24px 1fr auto; }
+      .song-ts { grid-column: 2; justify-self: start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="index.html"><span class="brand-dot">HD</span> HoshiDesk Studio</a>
+      <div class="nav-links">
+        <a href="index.html">Products</a>
+        <a href="obs-chat-css.html">Free Chat CSS</a>
+        <a href="vtuber-schedule.html">Free Schedule Maker</a>
+        <a href="obs-singing-setlist.html" class="active">Free Setlist Tool</a>
+        <a href="srt-tool.html">Free SRT Tool</a>
+        <a href="table-tool.html">Free Table Tool</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="pill">100% BROWSER-LOCAL · NO LOGIN · LIVE STREAM TIMER &amp; YOUTUBE CHAPTERS</div>
+      <h1>Free OBS Singing Stream Setlist &amp; YouTube Timestamp Generator</h1>
+      <p class="sub">Manage your karaoke / utawaku setlist live, record exact elapsed song timestamps with 1 click on <strong>▶ Now Singing</strong>, preview the <strong>Sakura Stage</strong> badge, and copy clean YouTube chapter descriptions in seconds.</p>
+    </section>
+
+    <section class="studio-grid">
+      <!-- Left: Timer + Interactive Setlist -->
+      <div class="card">
+        <div class="card-title">
+          <span>🎤 Live Singing Setlist &amp; Stream Timer</span>
+          <span class="badge-free">FREE WEB TOOL</span>
+        </div>
+
+        <div class="timer-box">
+          <div class="timer-left">
+            <div class="timer-clock" id="timerDisplay">00:00</div>
+            <span class="timer-state" id="timerState">○ READY</span>
+          </div>
+          <div class="timer-controls">
+            <button type="button" class="btn btn-primary btn-sm" id="startTimerBtn">▶ Start</button>
+            <button type="button" class="btn btn-sm" id="pauseTimerBtn">⏸ Pause</button>
+            <button type="button" class="btn btn-sm" id="resetTimerBtn">↺ Reset</button>
+          </div>
+        </div>
+
+        <form class="add-form" id="addSongForm">
+          <input type="text" id="songTitleInput" placeholder="Song Title (e.g. Idol / 怪獣の花唄)" aria-label="Song Title" maxlength="80" required />
+          <input type="text" id="songArtistInput" placeholder="Artist (e.g. YOASOBI)" aria-label="Artist" maxlength="60" />
+          <button type="submit" class="btn btn-sakura" id="addSongBtn">+ Add Song</button>
+        </form>
+
+        <div class="song-list" id="songList" aria-live="polite"></div>
+
+        <div class="list-footer">
+          <span class="list-meta" id="songCountLabel">4 songs · 0 logged</span>
+          <div style="display:flex;gap:8px;">
+            <button type="button" class="btn btn-sm" id="resetSampleBtn">Reset Sample</button>
+            <button type="button" class="btn btn-sm btn-danger" id="clearAllBtn">Clear All</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Live Sakura Stage Badge + YouTube Chapter Timestamps -->
+      <div class="card">
+        <div class="stage-bar">
+          <div>
+            <strong style="font-size:15px;">🌸 Sakura Stage "Now Singing" Preview</strong>
+            <div style="font-size:12px;color:var(--muted);">Transparent OBS canvas preview · Click ▶ Now Singing on any song</div>
+          </div>
+          <div class="swatches" aria-label="Accent Color Swatches">
+            <button type="button" class="swatch" data-color="#ff7aa2" style="background:#ff7aa2" title="Sakura Pink"></button>
+            <button type="button" class="swatch" data-color="#a78bfa" style="background:#a78bfa" title="Lavender"></button>
+            <button type="button" class="swatch" data-color="#38bdf8" style="background:#38bdf8" title="Sky Blue"></button>
+            <button type="button" class="swatch" data-color="#34d399" style="background:#34d399" title="Mint"></button>
+            <button type="button" class="swatch" data-color="#fb923c" style="background:#fb923c" title="Peach"></button>
+          </div>
+        </div>
+
+        <div class="obs-stage" id="obsStage">
+          <div class="sakura-badge idle" id="sakuraBadge">
+            <div class="eq-wrap" aria-hidden="true">
+              <span class="eq-bar"></span>
+              <span class="eq-bar"></span>
+              <span class="eq-bar"></span>
+              <span class="eq-bar"></span>
+            </div>
+            <div class="badge-content">
+              <div class="badge-kicker" id="badgeKicker">♪ STANDBY · SAKURA STAGE</div>
+              <div class="badge-song" id="badgeSong">Click ▶ Now Singing to go live</div>
+              <div class="badge-artist" id="badgeArtist">Add or select a track from your setlist</div>
+              <div class="badge-meta" id="badgeMeta">Track — / 4 · Elapsed 00:00</div>
+            </div>
+          </div>
+        </div>
+
+        <label for="timestampOutput" style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;color:#cbd5e1;margin-bottom:6px;">
+          <span>YouTube Chapter Timestamps</span>
+          <span style="color:#6ee7b7;" id="tsCountBadge">0 chapters ready</span>
+        </label>
+        <textarea id="timestampOutput" readonly spellcheck="false" placeholder="Click ▶ Now Singing on any song to auto-log timestamps like:&#10;00:00 1. Idol / YOASOBI&#10;04:15 2. Yoru ni Kakeru / YOASOBI"></textarea>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-sakura" id="copyTsBtn" style="flex:1;">📋 1-Click Copy YouTube Timestamps</button>
+          <button type="button" class="btn" id="dlTsBtn">⬇ .TXT</button>
+        </div>
+        <div class="copy-status" id="copyStatus"></div>
+      </div>
+    </section>
+
+    <!-- Upgrade Cards -->
+    <div class="section-head">
+      <div>
+        <h2>Want a Live OBS Dock + 4 Animated Singing Themes?</h2>
+        <p>Run your full karaoke setlist directly inside OBS Studio (no browser window needed) with 1-click Live Dock switching and auto-scrolling overlays.</p>
+      </div>
+      <span class="badge-pro">100% OFFLINE · ONE-TIME PAYMENT</span>
+    </div>
+
+    <section class="upgrade-grid">
+      <article class="up-card">
+        <div>
+          <div class="up-tag">FLAGSHIP KARAOKE OVERLAY STUDIO</div>
+          <h3>🎤 UtaRack Studio v1.0 <span class="badge-pro">¥1,800 / $12</span></h3>
+          <p>Complete offline OBS singing-stream setlist overlay + Live OBS Custom Browser Dock + 1-click YouTube chapter timestamp export.</p>
+          <ul class="up-list">
+            <li>✓ <strong>OBS Custom Browser Dock</strong>: Switch songs mid-stream without leaving OBS</li>
+            <li>✓ <strong>4 Zero-CDN Themes × 2 Layouts</strong>: Sakura Stage, Cyber Live, Starlight Acoustic &amp; Retro Karaoke</li>
+            <li>✓ Live equalizer bars, auto-scroll setlist &amp; commercial streaming license</li>
+          </ul>
+        </div>
+        <div class="btn-row" style="margin-top:0;">
+          <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9229730" target="_blank" rel="noopener" style="flex:1;">BOOTH (¥1,800)</a>
+          <a class="btn btn-primary" href="https://rpee0812.itch.io/utarack-studio-offline-obs-singing-stream-setlist-live-dock-youtube-timestamp" target="_blank" rel="noopener" style="flex:1;">itch.io ($12)</a>
+        </div>
+      </article>
+
+      <article class="up-card">
+        <div>
+          <div class="up-tag" style="color:#6ee7b7;">FREE STARTER DOWNLOAD ON BOOTH</div>
+          <h3>🌸 Free Singing Mini <span class="badge-free">¥0 FREE</span></h3>
+          <p>Want to test an offline OBS Browser Source singing badge right now? Grab our free Sakura Now-Singing Mini pack directly on BOOTH.</p>
+          <ul class="up-list">
+            <li>✓ Ready-to-use offline <code>.html</code> OBS Browser Source overlay</li>
+            <li>✓ Cute Sakura Stage theme with animated equalizer</li>
+            <li>✓ Zero login, zero watermarks — free for VTubers &amp; streamers</li>
+          </ul>
+        </div>
+        <div class="btn-row" style="margin-top:0;">
+          <a class="btn btn-free" href="https://rpee0812.booth.pm/items/9229733" target="_blank" rel="noopener" style="flex:1;">Download ¥0 Free Singing Mini (BOOTH)</a>
+        </div>
+      </article>
+
+      <article class="up-card featured">
+        <div>
+          <div class="up-tag" style="color:#fda4af;">★ BEST VALUE · SAVE 22% / ¥1,520 OFF</div>
+          <h3>✨ VTuber 3-in-1 Bundle <span class="badge-pro">¥3,980 / $29</span></h3>
+          <p>Upgrade your entire broadcast setup at once with all 3 HoshiDesk offline OBS studios in one bundle (JP / ZH / EN).</p>
+          <ul class="up-list">
+            <li>✓ <strong>HaishinDeck v3.0</strong> (6 animated widgets + Live Control Deck + Schedule PNG)</li>
+            <li>✓ <strong>OverlayFrame v1.0</strong> (4 full 1920×1080 broadcast scenes, PNG + HTML)</li>
+            <li>✓ <strong>ChatTheme v1.0</strong> (6 YouTube &amp; Twitch OBS Chat CSS themes)</li>
+          </ul>
+        </div>
+        <div class="btn-row" style="margin-top:0;">
+          <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9229507" target="_blank" rel="noopener" style="flex:1;">BOOTH (¥3,980)</a>
+          <a class="btn btn-primary" href="https://rpee0812.itch.io/vtuber-broadcast-complete-3-in-1-bundle-obs-widgets-4-scene-frames-chat-css" target="_blank" rel="noopener" style="flex:1;">itch.io ($29)</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- SEO How-to Guide -->
+    <section class="howto">
+      <h2>How to Generate YouTube Singing Stream Timestamps in 3 Easy Steps</h2>
+      <ol>
+        <li>Add your planned karaoke songs (or add viewer requests on the fly) using the <strong>Song Title + Artist</strong> form above.</li>
+        <li>Click <strong>▶ Start</strong> on the Live Stream Timer when your YouTube / Twitch stream goes live.</li>
+        <li>Whenever you start a new song, click <strong>▶ Now Singing</strong> on that track. Its exact elapsed timestamp (<code>MM:SS</code>) is recorded automatically — after stream, hit <strong>1-Click Copy YouTube Timestamps</strong> and paste straight into your YouTube video description!</li>
+      </ol>
+      <p style="font-size:13px;color:var(--muted);margin-top:12px;">Planning this week's streams? Try our <a href="vtuber-schedule.html" style="color:#a5b4fc;font-weight:700;">Free VTuber Schedule Maker (1920×1080 PNG)</a> and <a href="obs-chat-css.html" style="color:#a5b4fc;font-weight:700;">Free OBS Chat CSS Generator</a>.</p>
+    </section>
+
+    <footer>
+      © 2026 <a href="index.html">HoshiDesk Studio</a> · 100% Browser-Local Creator Tools · <a href="obs-chat-css.html">Free Chat CSS</a> · <a href="vtuber-schedule.html">Free Schedule Maker</a> · <a href="mailto:rpee0812@gmail.com">Support</a>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const SAMPLE_SONGS = [
+        { id: 1, title: 'Idol (アイドル)', artist: 'YOASOBI', timestamp: null },
+        { id: 2, title: 'Yoru ni Kakeru (夜に駆ける)', artist: 'YOASOBI', timestamp: null },
+        { id: 3, title: 'Kaiju no Hanauta (怪獣の花唄)', artist: 'Vaundy', timestamp: null },
+        { id: 4, title: 'Unravel', artist: 'TK from Ling tosite sigure', timestamp: null }
+      ];
+
+      let nextId = 5;
+      let songs = SAMPLE_SONGS.map(s => ({ ...s }));
+      let activeSongId = null;
+      let elapsedSeconds = 0;
+      let timerId = null;
+
+      const timerDisplay = document.getElementById('timerDisplay');
+      const timerState = document.getElementById('timerState');
+      const songList = document.getElementById('songList');
+      const songCountLabel = document.getElementById('songCountLabel');
+      const obsStage = document.getElementById('obsStage');
+      const sakuraBadge = document.getElementById('sakuraBadge');
+      const badgeKicker = document.getElementById('badgeKicker');
+      const badgeSong = document.getElementById('badgeSong');
+      const badgeArtist = document.getElementById('badgeArtist');
+      const badgeMeta = document.getElementById('badgeMeta');
+      const timestampOutput = document.getElementById('timestampOutput');
+      const tsCountBadge = document.getElementById('tsCountBadge');
+      const copyStatus = document.getElementById('copyStatus');
+      const songTitleInput = document.getElementById('songTitleInput');
+      const songArtistInput = document.getElementById('songArtistInput');
+
+      function formatTime(totalSec) {
+        const hrs = Math.floor(totalSec / 3600);
+        const mins = Math.floor((totalSec % 3600) / 60);
+        const secs = totalSec % 60;
+        const mm = String(mins).padStart(2, '0');
+        const ss = String(secs).padStart(2, '0');
+        return hrs > 0 ? `${hrs}:${mm}:${ss}` : `${mm}:${ss}`;
+      }
+
+      function updateTimerUI() {
+        timerDisplay.textContent = formatTime(elapsedSeconds);
+        if (timerId !== null) {
+          timerState.textContent = '● LIVE';
+          timerState.classList.add('running');
+        } else if (elapsedSeconds > 0) {
+          timerState.textContent = '⏸ PAUSED';
+          timerState.classList.remove('running');
+        } else {
+          timerState.textContent = '○ READY';
+          timerState.classList.remove('running');
+        }
+        updateBadge();
+      }
+
+      function startTimer() {
+        if (timerId !== null) return;
+        timerId = setInterval(() => {
+          elapsedSeconds += 1;
+          updateTimerUI();
+        }, 1000);
+        updateTimerUI();
+      }
+
+      function pauseTimer() {
+        if (timerId !== null) {
+          clearInterval(timerId);
+          timerId = null;
+        }
+        updateTimerUI();
+      }
+
+      function resetTimer() {
+        pauseTimer();
+        elapsedSeconds = 0;
+        updateTimerUI();
+      }
+
+      function updateBadge() {
+        const idx = songs.findIndex(s => s.id === activeSongId);
+        if (idx === -1) {
+          sakuraBadge.classList.add('idle');
+          badgeKicker.textContent = '♪ STANDBY · SAKURA STAGE';
+          badgeSong.textContent = 'Click ▶ Now Singing to go live';
+          badgeArtist.textContent = 'Add or select a track from your setlist';
+          badgeMeta.textContent = `Track — / ${songs.length} · Elapsed ${formatTime(elapsedSeconds)}`;
+          return;
+        }
+        const current = songs[idx];
+        sakuraBadge.classList.remove('idle');
+        badgeKicker.textContent = '♪ NOW SINGING · SAKURA STAGE';
+        badgeSong.textContent = current.title;
+        badgeArtist.textContent = current.artist || 'Live Acoustic / Karaoke';
+        badgeMeta.textContent = `Track ${idx + 1} / ${songs.length} · Logged ${current.timestamp || formatTime(elapsedSeconds)} · Elapsed ${formatTime(elapsedSeconds)}`;
+      }
+
+      function updateTimestamps() {
+        const logged = songs.filter(s => s.timestamp !== null);
+        const lines = logged.map((s, i) => {
+          const suffix = s.artist ? `${s.title} / ${s.artist}` : s.title;
+          return `${s.timestamp} ${i + 1}. ${suffix}`;
+        });
+        timestampOutput.value = lines.join('\n');
+        tsCountBadge.textContent = `${logged.length} chapter${logged.length === 1 ? '' : 's'} ready`;
+        songCountLabel.textContent = `${songs.length} song${songs.length === 1 ? '' : 's'} · ${logged.length} logged`;
+      }
+
+      function setNowSinging(id) {
+        const target = songs.find(s => s.id === id);
+        if (!target) return;
+        activeSongId = id;
+        target.timestamp = formatTime(elapsedSeconds);
+        renderSongs();
+        updateBadge();
+        updateTimestamps();
+      }
+
+      function deleteSong(id) {
+        songs = songs.filter(s => s.id !== id);
+        if (activeSongId === id) {
+          activeSongId = null;
+        }
+        renderSongs();
+        updateBadge();
+        updateTimestamps();
+      }
+
+      function renderSongs() {
+        songList.innerHTML = '';
+        if (songs.length === 0) {
+          const empty = document.createElement('div');
+          empty.className = 'empty-msg';
+          empty.textContent = 'Your setlist is empty. Add a song above to get started!';
+          songList.appendChild(empty);
+          return;
+        }
+
+        songs.forEach((song, index) => {
+          const row = document.createElement('div');
+          row.className = 'song-item' + (song.id === activeSongId ? ' is-active' : '');
+
+          const idxEl = document.createElement('div');
+          idxEl.className = 'song-idx';
+          idxEl.textContent = `#${index + 1}`;
+
+          const info = document.createElement('div');
+          info.className = 'song-info';
+          const tEl = document.createElement('div');
+          tEl.className = 'song-title';
+          tEl.textContent = song.title;
+          const aEl = document.createElement('div');
+          aEl.className = 'song-artist';
+          aEl.textContent = song.artist || '—';
+          info.appendChild(tEl);
+          info.appendChild(aEl);
+
+          const tsEl = document.createElement('span');
+          tsEl.className = 'song-ts' + (song.timestamp ? '' : ' empty');
+          tsEl.textContent = song.timestamp || '--:--';
+
+          const playBtn = document.createElement('button');
+          playBtn.type = 'button';
+          playBtn.className = 'btn btn-sm ' + (song.id === activeSongId ? 'btn-sakura' : 'btn-primary');
+          playBtn.textContent = song.id === activeSongId ? '♪ Singing' : '▶ Now Singing';
+          playBtn.setAttribute('data-action', 'now-singing');
+          playBtn.setAttribute('data-song-id', String(song.id));
+          playBtn.addEventListener('click', () => setNowSinging(song.id));
+
+          const delBtn = document.createElement('button');
+          delBtn.type = 'button';
+          delBtn.className = 'btn btn-sm btn-danger';
+          delBtn.textContent = '✕';
+          delBtn.title = 'Delete song';
+          delBtn.setAttribute('aria-label', `Delete ${song.title}`);
+          delBtn.addEventListener('click', () => deleteSong(song.id));
+
+          row.appendChild(idxEl);
+          row.appendChild(info);
+          row.appendChild(tsEl);
+          row.appendChild(playBtn);
+          row.appendChild(delBtn);
+          songList.appendChild(row);
+        });
+      }
+
+      document.getElementById('addSongForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const title = songTitleInput.value.trim();
+        const artist = songArtistInput.value.trim();
+        if (!title) return;
+        songs.push({ id: nextId++, title, artist, timestamp: null });
+        songTitleInput.value = '';
+        songArtistInput.value = '';
+        songTitleInput.focus();
+        renderSongs();
+        updateBadge();
+        updateTimestamps();
+      });
+
+      document.getElementById('startTimerBtn').addEventListener('click', startTimer);
+      document.getElementById('pauseTimerBtn').addEventListener('click', pauseTimer);
+      document.getElementById('resetTimerBtn').addEventListener('click', resetTimer);
+
+      document.getElementById('resetSampleBtn').addEventListener('click', () => {
+        songs = SAMPLE_SONGS.map(s => ({ ...s }));
+        nextId = 5;
+        activeSongId = null;
+        renderSongs();
+        updateBadge();
+        updateTimestamps();
+      });
+
+      document.getElementById('clearAllBtn').addEventListener('click', () => {
+        songs = [];
+        activeSongId = null;
+        renderSongs();
+        updateBadge();
+        updateTimestamps();
+      });
+
+      document.querySelectorAll('.swatch').forEach(sw => {
+        sw.addEventListener('click', () => {
+          obsStage.style.setProperty('--sakura-accent', sw.dataset.color);
+        });
+      });
+
+      document.getElementById('copyTsBtn').addEventListener('click', async () => {
+        const text = timestampOutput.value.trim();
+        if (!text) {
+          copyStatus.textContent = 'Click ▶ Now Singing on at least one song first!';
+          return;
+        }
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            timestampOutput.select();
+            document.execCommand('copy');
+          }
+          copyStatus.textContent = '✓ Copied YouTube Chapter Timestamps to clipboard!';
+        } catch {
+          timestampOutput.select();
+          document.execCommand('copy');
+          copyStatus.textContent = '✓ Timestamps selected & copied!';
+        }
+        setTimeout(() => { copyStatus.textContent = ''; }, 3500);
+      });
+
+      document.getElementById('dlTsBtn').addEventListener('click', () => {
+        const text = timestampOutput.value.trim();
+        if (!text) {
+          copyStatus.textContent = 'No logged timestamps to download yet.';
+          return;
+        }
+        const blob = new Blob([text + '\n'], { type: 'text/plain;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'youtube-singing-timestamps.txt';
+        a.click();
+        copyStatus.textContent = '✓ Downloaded youtube-singing-timestamps.txt';
+      });
+
+      renderSongs();
+      updateTimerUI();
+      updateTimestamps();
+    })();
+  </script>
+</body>
+</html>
