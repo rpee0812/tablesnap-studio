@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google-site-verification" content="T9wiYaMXdAnWHqGgyeJ-ngXF1vKlRXb3ORrwt7gI-IE" />
-  <title>TableSnap Studio — Fast, Local-First Tools for Creators & Analysts</title>
-  <meta name="description" content="Zero-subscription, 100% local software tools: TableSnap (web table to Excel), StreamKit Studio (offline OBS widgets), and SubCraft Pro (SRT/VTT bilingual subtitle editor)." />
+  <title>TableSnap Studio — Fast, Local-First Tools for Creators &amp; Analysts</title>
+  <meta name="description" content="Zero-subscription, 100% local software tools: StreamKit Studio v3.0 (OBS Live Control Deck & 6 widgets), SubCraft Pro v2.0 (CPS Linter, Smart Auto-Split & Bilingual .ASS), and TableSnap v2.0 (B2B Lead-Gen & E-Commerce Presets to Excel/CSV)." />
   <style>
     :root {
       --bg: #0b1120;
@@ -17,6 +17,7 @@
       --primary-h: #4f46e5;
       --accent: #22d3ee;
       --green: #10b981;
+      --pink: #f43f5e;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -25,25 +26,25 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
       line-height: 1.6;
     }
-    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 22px; }
     nav {
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
       padding: 20px 0; border-bottom: 1px solid rgba(51,65,85,0.5);
     }
     .brand { font-weight: 800; font-size: 18px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
     .brand-dot { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg, #6366f1, #22d3ee); display: inline-flex; align-items: center; justify-content: center; color: #0b1120; font-weight: 900; font-size: 13px; }
-    .nav-links { display: flex; gap: 20px; font-size: 14px; }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; }
     .nav-links a { color: var(--muted); text-decoration: none; font-weight: 600; }
     .nav-links a:hover { color: #fff; }
-    .hero { text-align: center; padding: 68px 0 48px; }
+    .hero { text-align: center; padding: 64px 0 42px; }
     .pill {
       display: inline-block; padding: 6px 14px; border-radius: 999px;
       background: rgba(99,102,241,0.18); border: 1px solid rgba(129,140,248,0.4);
       color: #c7d2fe; font-size: 12px; font-weight: 700; margin-bottom: 16px;
     }
     h1 { font-size: clamp(32px, 5vw, 50px); line-height: 1.12; letter-spacing: -0.03em; margin-bottom: 16px; }
-    .hero p { max-width: 640px; margin: 0 auto; color: var(--muted); font-size: 17px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; margin: 36px 0 64px; }
+    .hero p { max-width: 660px; margin: 0 auto; color: var(--muted); font-size: 17px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 22px; margin: 32px 0 44px; }
     .card {
       background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
       padding: 26px; display: flex; flex-direction: column; justify-content: space-between;
@@ -51,21 +52,53 @@
     }
     .card:hover { border-color: var(--primary); transform: translateY(-2px); }
     .tag { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 8px; }
-    .card h2 { font-size: 22px; margin-bottom: 8px; }
+    .title-row { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; margin-bottom: 8px; }
+    .card h2 { font-size: 22px; line-height: 1.2; }
+    .ver {
+      font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 999px;
+      background: rgba(16,185,129,0.16); border: 1px solid rgba(16,185,129,0.45);
+      color: #6ee7b7; letter-spacing: 0.02em;
+    }
     .card p { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
-    .list { list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; color: #e2e8f0; margin-bottom: 22px; }
+    .list { list-style: none; display: flex; flex-direction: column; gap: 7px; font-size: 13.5px; color: #e2e8f0; margin-bottom: 22px; }
     .price-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
     .price { font-size: 24px; font-weight: 800; }
     .price span { font-size: 12px; color: var(--muted); font-weight: 600; }
     .btns { display: flex; flex-direction: column; gap: 8px; }
+    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .btn {
-      display: block; text-align: center; padding: 11px 14px; border-radius: 9px;
-      font-weight: 700; font-size: 14px; text-decoration: none; transition: background 0.14s;
+      display: block; text-align: center; padding: 11px 12px; border-radius: 9px;
+      font-weight: 700; font-size: 13.5px; text-decoration: none; transition: background 0.14s, border-color 0.14s;
     }
     .btn-primary { background: var(--primary); color: #fff; }
     .btn-primary:hover { background: var(--primary-h); }
     .btn-secondary { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; }
     .btn-secondary:hover { background: #273549; }
+    .btn-booth { background: rgba(244,63,94,0.14); color: #fda4af; border: 1px solid rgba(244,63,94,0.45); font-size: 12.5px; padding: 9px 10px; }
+    .btn-booth:hover { background: rgba(244,63,94,0.24); color: #fff; }
+    .btn-free { background: rgba(16,185,129,0.14); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.45); font-size: 12.5px; padding: 9px 10px; }
+    .btn-free:hover { background: rgba(16,185,129,0.24); color: #fff; }
+
+    /* Custom Services CTA */
+    .services {
+      background: linear-gradient(135deg, rgba(99,102,241,0.14), rgba(34,211,238,0.08));
+      border: 1px solid rgba(129,140,248,0.42);
+      border-radius: 18px; padding: 30px; margin-bottom: 44px;
+    }
+    .services-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+    .services h2 { font-size: 24px; letter-spacing: -0.02em; margin-top: 4px; }
+    .services-sub { color: var(--muted); font-size: 14.5px; max-width: 680px; margin-top: 6px; }
+    .pkg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 20px; }
+    .pkg {
+      background: rgba(11,17,32,0.72); border: 1px solid var(--border); border-radius: 12px; padding: 18px;
+    }
+    .pkg-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+    .pkg h3 { font-size: 16px; color: #f8fafc; }
+    .pkg-price { font-size: 16px; font-weight: 800; color: #6ee7b7; white-space: nowrap; }
+    .pkg p { font-size: 13px; color: var(--muted); margin: 0; }
+    .services-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+    .services-note { font-size: 13px; color: #cbd5e1; }
+
     .faq { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 56px; }
     .faq h3 { font-size: 20px; margin-bottom: 16px; }
     .faq-item { margin-bottom: 14px; }
@@ -73,6 +106,7 @@
     .faq-item p { font-size: 13.5px; color: var(--muted); }
     footer { text-align: center; padding: 28px 0 44px; border-top: 1px solid rgba(51,65,85,0.5); font-size: 13px; color: var(--muted); }
     footer a { color: #a5b4fc; text-decoration: none; }
+    @media (max-width: 520px) { .btn-row { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -81,6 +115,7 @@
       <div class="brand"><span class="brand-dot">TS</span> TableSnap Studio</div>
       <div class="nav-links">
         <a href="#products">Products</a>
+        <a href="#services">Custom Services</a>
         <a href="srt-tool.html">Free SRT Tool</a>
         <a href="table-tool.html">Free Table Tool</a>
         <a href="#faq">FAQ</a>
@@ -89,77 +124,130 @@
     </nav>
 
     <section class="hero">
-      <div class="pill">100% LOCAL · ZERO SUBSCRIPTIONS · BUILT FOR SPEED</div>
+      <div class="pill">100% LOCAL · ZERO SUBSCRIPTIONS · MAJOR v2.0 / v3.0 RELEASE</div>
       <h1>One-Time Tools That Save Hours Every Week</h1>
       <p>No bloated SaaS subscriptions. No uploading your private files to unknown clouds. Buy once, run locally forever.</p>
     </section>
 
     <section id="products" class="grid">
-      <!-- Product 1: StreamKit Studio -->
+      <!-- Product 1: StreamKit Studio v3.0 -->
       <article class="card">
         <div>
           <div class="tag">For Streamers &amp; VTubers</div>
-          <h2>StreamKit Studio</h2>
-          <p>Zero-lag offline OBS Studio animated widget pack with a built-in point-and-click Visual Customizer.</p>
+          <div class="title-row">
+            <h2>StreamKit Studio</h2>
+            <span class="ver">v3.0 NEW</span>
+          </div>
+          <p>Zero-lag offline OBS Studio animated widget pack with a built-in Visual Customizer and the new OBS Live Control Deck.</p>
           <ul class="list">
-            <li>✓ 4 Widgets: Goal Bar, Countdown, Social Rotator, Study Pomodoro</li>
-            <li>✓ 4 Pro Themes: Cyber Neon, Kawaii Pastel, Glass, Cozy Lofi</li>
-            <li>✓ 1-Click standalone .HTML export for OBS Browser Source</li>
-            <li>✓ Commercial streaming license included</li>
+            <li>✓ <strong>OBS Live Control Deck</strong>: Update goals, timers &amp; ticker live mid-stream</li>
+            <li>✓ <strong>6 Widgets</strong>: Goal Bar, Countdown, Social Rotator, Pomodoro, <strong>Weekly Schedule (1920×1080 PNG)</strong> &amp; <strong>Live Ticker</strong></li>
+            <li>✓ <strong>4 Illustrated Themes</strong>: Sakura Neko, Mecha Crimson, Arcane &amp; Pixel</li>
+            <li>✓ 1-Click standalone .HTML export + commercial streaming license</li>
           </ul>
         </div>
         <div>
-          <div class="price-row"><div class="price">$15 <span>one-time</span></div></div>
+          <div class="price-row"><div class="price">$15 <span>one-time (or ¥0 Starter)</span></div></div>
           <div class="btns">
-            <a class="btn btn-primary" href="https://rpee0812.itch.io/streamkit-studio-obs-animated-widget-pack-customizer" target="_blank" rel="noopener">Get on itch.io ($15)</a>
+            <a class="btn btn-primary" href="https://rpee0812.itch.io/streamkit-studio-obs-animated-widget-pack-customizer" target="_blank" rel="noopener">Get v3.0 on itch.io ($15)</a>
             <a class="btn btn-secondary" href="https://payhip.com/b/vdADZ" target="_blank" rel="noopener">Buy Direct on Payhip ($15)</a>
+            <div class="btn-row">
+              <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9227435" target="_blank" rel="noopener">BOOTH JP Store</a>
+              <a class="btn btn-free" href="https://rpee0812.booth.pm/items/9227852" target="_blank" rel="noopener">BOOTH ¥0 Free Starter</a>
+            </div>
           </div>
         </div>
       </article>
 
-      <!-- Product 2: SubCraft Pro -->
+      <!-- Product 2: SubCraft Pro v2.0 -->
       <article class="card">
         <div>
           <div class="tag">For YouTubers &amp; Editors</div>
-          <h2>SubCraft Pro</h2>
-          <p>Native Windows (.exe) &amp; macOS offline desktop subtitle studio for fixing, syncing, and merging SRT/VTT files.</p>
+          <div class="title-row">
+            <h2>SubCraft Pro</h2>
+            <span class="ver">v2.0 NEW</span>
+          </div>
+          <p>Native Windows (.exe) &amp; macOS offline desktop subtitle studio for linting, splitting, syncing, and bilingual merging.</p>
           <ul class="list">
-            <li>✓ Free: Time Shift, HTML/SDH Clean, Overlap Fix, SRT/VTT/TXT</li>
-            <li>✓ Pro: Bilingual Subtitle Merger (align 2 languages automatically)</li>
-            <li>✓ Pro: Unlimited Batch Folder Cleaning &amp; FPS Speed Resync</li>
-            <li>✓ 100% offline — your transcripts never leave your PC</li>
+            <li>✓ <strong>Netflix / YouTube CPS Quality Linter</strong> &amp; <strong>Smart Auto-Split</strong></li>
+            <li>✓ <strong>Styled Bilingual .ASS Export</strong> (auto-align 2 languages cleanly)</li>
+            <li>✓ <strong>Creator Glossary Batch Fixer</strong> &amp; side-by-side <strong>Visual Diff</strong></li>
+            <li>✓ Free core tools + 100% offline — transcripts never leave your PC</li>
           </ul>
         </div>
         <div>
           <div class="price-row"><div class="price">Free <span>/ $19 Pro</span></div></div>
           <div class="btns">
-            <a class="btn btn-primary" href="https://rpee0812.itch.io/subcraft-pro-offline-srt-vtt-subtitle-studio-win-mac" target="_blank" rel="noopener">Download Free (Win &amp; Mac)</a>
-            <a class="btn btn-secondary" href="https://payhip.com/b/IEKZn" target="_blank" rel="noopener">Unlock Lifetime Pro ($19)</a>
+            <a class="btn btn-primary" href="https://rpee0812.itch.io/subcraft-pro-offline-srt-vtt-subtitle-studio-win-mac" target="_blank" rel="noopener">Download v2.0 on itch.io (Win &amp; Mac)</a>
+            <a class="btn btn-secondary" href="https://payhip.com/b/IEKZn" target="_blank" rel="noopener">Unlock Lifetime Pro on Payhip ($19)</a>
           </div>
         </div>
       </article>
 
-      <!-- Product 3: TableSnap -->
+      <!-- Product 3: TableSnap v2.0 -->
       <article class="card">
         <div>
-          <div class="tag">For Analysts &amp; Office Power Users</div>
-          <h2>TableSnap Extension</h2>
-          <p>Auto-detect any HTML table or repeating product list on any webpage and export cleanly to Excel (.xlsx), CSV, or Markdown.</p>
+          <div class="tag">For Analysts, B2B &amp; E-Commerce</div>
+          <div class="title-row">
+            <h2>TableSnap</h2>
+            <span class="ver">v2.0 NEW</span>
+          </div>
+          <p>Auto-detect any HTML table or repeating product/lead list on any webpage and export cleanly to Excel (.xlsx) or CSV.</p>
           <ul class="list">
-            <li>✓ Free: Copy for Excel, Copy Markdown, UTF-8 BOM CSV</li>
-            <li>✓ Pro: Native formatted .XLSX &amp; JSON export</li>
-            <li>✓ Pro: Smart Card/List Detection &amp; Multi-Page Merge</li>
-            <li>✓ Zero tracking, zero cloud servers</li>
+            <li>✓ <strong>B2B Lead-Gen &amp; E-Commerce Presets</strong>: Google Maps, Amazon/Shopee &amp; Job Boards</li>
+            <li>✓ <strong>Auto-Dedupe</strong> &amp; Multi-Page Merge for clean lead lists</li>
+            <li>✓ <strong>1-Click Excel (.XLSX) &amp; UTF-8 CSV Export</strong> with auto number cleaner</li>
+            <li>✓ 100% local in your browser — zero tracking, zero cloud servers</li>
           </ul>
         </div>
         <div>
           <div class="price-row"><div class="price">Free <span>/ $9 Pro</span></div></div>
           <div class="btns">
-            <a class="btn btn-primary" href="https://payhip.com/b/lOCqt" target="_blank" rel="noopener">Get TableSnap Pro ($9)</a>
+            <a class="btn btn-primary" href="https://payhip.com/b/lOCqt" target="_blank" rel="noopener">Get TableSnap v2.0 Pro ($9)</a>
             <a class="btn btn-secondary" href="https://addons.mozilla.org/en-US/firefox/addon/tablesnap-%E7%B6%B2%E9%A0%81%E8%A1%A8%E6%A0%BC%E4%B8%80%E9%8D%B5%E5%8C%AF%E5%87%BA-excel-csv-m/" target="_blank" rel="noopener">Firefox Add-on Page</a>
           </div>
         </div>
       </article>
+    </section>
+
+    <!-- Custom Services / Done-For-You CTA -->
+    <section id="services" class="services">
+      <div class="services-head">
+        <div>
+          <div class="tag">Done-For-You · Fast Turnaround</div>
+          <h2>Need a Custom OBS Setup or Automation Tool?</h2>
+          <p class="services-sub">Skip the DIY setup. We build custom offline VTuber OBS widgets and tailored local Python/AI workflow tools directly for creators, agencies, and small teams.</p>
+        </div>
+      </div>
+
+      <div class="pkg-grid">
+        <div class="pkg">
+          <div class="pkg-top">
+            <h3>Custom VTuber OBS Widget</h3>
+            <span class="pkg-price">$35 – $65</span>
+          </div>
+          <p>Bespoke animated Browser Source widget (goal bar, schedule card, ticker, alert or Live Control Deck theme) matched to your model &amp; brand colors.</p>
+        </div>
+        <div class="pkg">
+          <div class="pkg-top">
+            <h3>Full Branded OBS Widget Suite</h3>
+            <span class="pkg-price">$75 – $95</span>
+          </div>
+          <p>Matched multi-widget OBS pack + 1920×1080 schedule generator + scene setup walkthrough ready for Twitch, YouTube, or Kick.</p>
+        </div>
+        <div class="pkg">
+          <div class="pkg-top">
+            <h3>Local Python / AI Workflow Tool</h3>
+            <span class="pkg-price">$80 – $120</span>
+          </div>
+          <p>Custom offline script or desktop utility for subtitle pipelines, B2B lead/table scraping, batch file processing, or local AI automation.</p>
+        </div>
+      </div>
+
+      <div class="services-foot">
+        <div class="services-note">Fixed-price quotes ($35–$120) · 100% local source delivered · Direct email support</div>
+        <a class="btn btn-primary" href="mailto:rpee0812@gmail.com?subject=Custom%20OBS%20%2F%20Automation%20Tool%20Request" style="padding:11px 22px;">Request a Custom Build — rpee0812@gmail.com</a>
+      </div>
     </section>
 
     <section id="faq" class="faq">
@@ -170,10 +258,10 @@
       </div>
       <div class="faq-item">
         <strong>Are there any recurring subscriptions?</strong>
-        <p>Never. Every Pro license is a one-time payment with lifetime access and free v1.x updates.</p>
+        <p>Never. Every Pro license is a one-time payment with lifetime local access and free updates.</p>
       </div>
       <div class="faq-item">
-        <strong>How do I get support or request a feature?</strong>
+        <strong>How do I get support or book a custom tool?</strong>
         <p>Email us anytime at <a href="mailto:rpee0812@gmail.com" style="color:#a5b4fc">rpee0812@gmail.com</a> — we reply quickly.</p>
       </div>
     </section>
