@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Online SRT / VTT Subtitle Shifter, Overlap Fixer &amp; Cleaner — SubCraft</title>
+  <meta name="description" content="Free 100% local online tool to shift SRT/VTT subtitle timestamps, fix overlapping timecodes, strip [Music] and HTML tags, and convert SRT to VTT or plain text." />
+  <style>
+    :root { --bg:#0c0c0f; --panel:#141418; --border:#272730; --text:#f4f4f5; --muted:#9494a3; --accent:#10b981; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif; line-height:1.6; }
+    .wrap { max-width:980px; margin:0 auto; padding:24px 20px 64px; }
+    nav { display:flex; justify-content:space-between; align-items:center; padding-bottom:18px; border-bottom:1px solid var(--border); margin-bottom:28px; }
+    nav a { color:var(--muted); text-decoration:none; font-weight:600; font-size:14px; }
+    nav a:hover { color:#fff; }
+    h1 { font-size:30px; letter-spacing:-0.02em; margin-bottom:8px; }
+    .sub { color:var(--muted); font-size:15px; margin-bottom:22px; }
+    .card { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:20px; }
+    .controls { display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-bottom:16px; }
+    label { font-size:13px; color:#d4d4d8; display:inline-flex; align-items:center; gap:6px; font-weight:600; }
+    input[type="number"] { width:100px; padding:6px 10px; border-radius:7px; border:1px solid var(--border); background:#09090b; color:#fff; font-size:13px; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    textarea { width:100%; height:290px; background:#09090b; border:1px solid var(--border); border-radius:10px; padding:12px; color:#e4e4e7; font-family:Consolas,monospace; font-size:12.5px; resize:vertical; }
+    .btns { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .btn { padding:9px 16px; border-radius:8px; border:1px solid var(--border); background:#1d1d23; color:#fff; font-weight:700; font-size:13px; cursor:pointer; text-decoration:none; }
+    .btn-primary { background:#f4f4f5; color:#09090b; border-color:#f4f4f5; }
+    .btn:hover { opacity:0.9; }
+    .cta { background:linear-gradient(135deg, #16161d, #111827); border:1px solid #3f3f4a; border-radius:14px; padding:24px; display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+    .cta h2 { font-size:20px; margin-bottom:4px; }
+    .cta p { font-size:14px; color:var(--muted); max-width:560px; }
+    .status { font-size:12.5px; color:#34d399; margin-top:8px; min-height:18px; }
+    @media (max-width:740px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <a href="index.html">← Back to TableSnap Studio</a>
+      <div style="display:flex;gap:16px;">
+        <a href="srt-tool.html" style="color:#fff">Free SRT Tool</a>
+        <a href="table-tool.html">Free Table Tool</a>
+      </div>
+    </nav>
+
+    <h1>Free Online SRT / VTT Subtitle Shifter &amp; Cleaner</h1>
+    <p class="sub">100% browser-local — your subtitle files are never uploaded to any server. Fix overlapping timestamps, shift sync, strip <code>[Music]</code> &amp; HTML tags, and convert formats instantly.</p>
+
+    <div class="card">
+      <div class="controls">
+        <label>Upload .SRT/.VTT: <input type="file" id="fileIn" accept=".srt,.vtt,.txt" /></label>
+        <label>Shift (ms): <input type="number" id="shiftMs" value="0" step="100" /></label>
+        <label><input type="checkbox" id="optHtml" checked /> Strip HTML tags</label>
+        <label><input type="checkbox" id="optSdh" checked /> Remove [Music] / ♪</label>
+        <label><input type="checkbox" id="optOverlap" checked /> Fix overlaps</label>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label style="margin-bottom:6px;display:block">Input (.SRT or .VTT)</label>
+          <textarea id="inputArea" placeholder="Paste your .SRT or .VTT subtitle here, or upload a file above...">1
+00:00:01,000 --> 00:00:04,200
+<i>[Music]</i> Welcome back to the video!
+
+2
+00:00:03,500 --> 00:00:06,500
+Let's fix these overlapping subtitles.</textarea>
+        </div>
+        <div>
+          <label style="margin-bottom:6px;display:block">Cleaned Output</label>
+          <textarea id="outputArea" readonly></textarea>
+        </div>
+      </div>
+
+      <div class="btns">
+        <button class="btn btn-primary" id="runBtn">Clean &amp; Sync Subtitles</button>
+        <button class="btn" id="dlSrtBtn">Download .SRT</button>
+        <button class="btn" id="dlVttBtn">Download .VTT</button>
+        <button class="btn" id="dlTxtBtn">Download Plain .TXT</button>
+      </div>
+      <div class="status" id="statusMsg"></div>
+    </div>
+
+    <div class="cta">
+      <div>
+        <h2>Need Bilingual Subtitle Merging or 50-File Batch Processing?</h2>
+        <p>Download <strong>SubCraft Pro</strong> (Windows .exe &amp; macOS) — includes Bilingual 2-Language Auto-Alignment, Unlimited Batch Folder Cleaning, and FPS Drift Resync.</p>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <a class="btn btn-primary" href="https://rpee0812.itch.io/subcraft-pro-offline-srt-vtt-subtitle-studio-win-mac" target="_blank" rel="noopener">Free Desktop App</a>
+        <a class="btn" href="https://payhip.com/b/IEKZn" target="_blank" rel="noopener">Get Pro ($19)</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const TIME_RE = /(\d{1,2}):(\d{2}):(\d{2})[,.](\d{1,3})\s*-->\s*(\d{1,2}):(\d{2}):(\d{2})[,.](\d{1,3})/;
+    const toMs = (h,m,s,ms) => ((+h*3600 + +m*60 + +s)*1000) + +ms.padEnd(3,'0').slice(0,3);
+    const fmt = (ms, sep=',') => {
+      ms = Math.max(0, Math.round(ms));
+      const h = Math.floor(ms/3600000), m = Math.floor((ms%3600000)/60000), s = Math.floor((ms%60000)/1000), ml = ms%1000;
+      return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}${sep}${String(ml).padStart(3,'0')}`;
+    };
+    let lastCues = [];
+
+    function process() {
+      const raw = document.getElementById('inputArea').value.replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n');
+      const shift = parseInt(document.getElementById('shiftMs').value || '0', 10) || 0;
+      const stripHtml = document.getElementById('optHtml').checked;
+      const stripSdh = document.getElementById('optSdh').checked;
+      const fixOv = document.getElementById('optOverlap').checked;
+
+      const blocks = raw.trim().split(/\n{2,}/);
+      let cues = [];
+      for (const b of blocks) {
+        const lines = b.split('\n').map(l => l.trimEnd()).filter(Boolean);
+        if (!lines.length || lines[0].startsWith('WEBVTT')) continue;
+        let ti = -1, m = null;
+        for (let i=0; i<Math.min(2, lines.length); i++) {
+          m = lines[i].match(TIME_RE);
+          if (m) { ti = i; break; }
+        }
+        if (ti === -1) continue;
+        let text = lines.slice(ti+1).join('\n');
+        if (stripHtml) text = text.replace(/<[^>]+>/g, '');
+        if (stripSdh) text = text.replace(/(\[[^\]]*\]|\([^)]*\)|♪[^♪]*♪|♪)/g, '');
+        text = text.split('\n').map(l => l.replace(/\s+/g,' ').trim()).filter(Boolean).join('\n');
+        if (!text) continue;
+        const s = Math.max(0, toMs(m[1],m[2],m[3],m[4]) + shift);
+        const e = Math.max(s+100, toMs(m[5],m[6],m[7],m[8]) + shift);
+        cues.push({ s, e, text });
+      }
+      cues.sort((a,b) => a.s - b.s);
+      if (fixOv) {
+        for (let i=0; i<cues.length-1; i++) {
+          if (cues[i].e > cues[i+1].s) cues[i].e = Math.max(cues[i].s+100, cues[i+1].s-10);
+        }
+      }
+      lastCues = cues;
+      document.getElementById('outputArea').value = cues.map((c,i) => `${i+1}\n${fmt(c.s)} --> ${fmt(c.e)}\n${c.text}`).join('\n\n');
+      document.getElementById('statusMsg').textContent = `Processed ${cues.length} subtitle lines cleanly (100% local).`;
+    }
+
+    function dl(content, name) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([content], { type:'text/plain;charset=utf-8' }));
+      a.download = name; a.click();
+    }
+
+    document.getElementById('fileIn').addEventListener('change', async (e) => {
+      const f = e.target.files[0]; if (!f) return;
+      document.getElementById('inputArea').value = await f.text();
+      process();
+    });
+    document.getElementById('runBtn').addEventListener('click', process);
+    document.getElementById('dlSrtBtn').addEventListener('click', () => { process(); dl(document.getElementById('outputArea').value, 'cleaned.srt'); });
+    document.getElementById('dlVttBtn').addEventListener('click', () => {
+      process();
+      const vtt = 'WEBVTT\n\n' + lastCues.map(c => `${fmt(c.s,'.')} --> ${fmt(c.e,'.')}\n${c.text}`).join('\n\n');
+      dl(vtt, 'cleaned.vtt');
+    });
+    document.getElementById('dlTxtBtn').addEventListener('click', () => {
+      process();
+      dl(lastCues.map(c => c.text.replace(/\n/g,' ')).join('\n'), 'transcript.txt');
+    });
+    process();
+  </script>
+</body>
+</html>

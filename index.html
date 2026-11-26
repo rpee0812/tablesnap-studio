@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TableSnap Studio — Fast, Local-First Tools for Creators & Analysts</title>
+  <meta name="description" content="Zero-subscription, 100% local software tools: TableSnap (web table to Excel), StreamKit Studio (offline OBS widgets), and SubCraft Pro (SRT/VTT bilingual subtitle editor)." />
+  <style>
+    :root {
+      --bg: #0b1120;
+      --panel: #131c31;
+      --border: #28354f;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #6366f1;
+      --primary-h: #4f46e5;
+      --accent: #22d3ee;
+      --green: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 20% 0%, #1e1b4b 0%, var(--bg) 45%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      line-height: 1.6;
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 0; border-bottom: 1px solid rgba(51,65,85,0.5);
+    }
+    .brand { font-weight: 800; font-size: 18px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
+    .brand-dot { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg, #6366f1, #22d3ee); display: inline-flex; align-items: center; justify-content: center; color: #0b1120; font-weight: 900; font-size: 13px; }
+    .nav-links { display: flex; gap: 20px; font-size: 14px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-weight: 600; }
+    .nav-links a:hover { color: #fff; }
+    .hero { text-align: center; padding: 68px 0 48px; }
+    .pill {
+      display: inline-block; padding: 6px 14px; border-radius: 999px;
+      background: rgba(99,102,241,0.18); border: 1px solid rgba(129,140,248,0.4);
+      color: #c7d2fe; font-size: 12px; font-weight: 700; margin-bottom: 16px;
+    }
+    h1 { font-size: clamp(32px, 5vw, 50px); line-height: 1.12; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .hero p { max-width: 640px; margin: 0 auto; color: var(--muted); font-size: 17px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; margin: 36px 0 64px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
+      padding: 26px; display: flex; flex-direction: column; justify-content: space-between;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .tag { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 8px; }
+    .card h2 { font-size: 22px; margin-bottom: 8px; }
+    .card p { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+    .list { list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; color: #e2e8f0; margin-bottom: 22px; }
+    .price-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+    .price { font-size: 24px; font-weight: 800; }
+    .price span { font-size: 12px; color: var(--muted); font-weight: 600; }
+    .btns { display: flex; flex-direction: column; gap: 8px; }
+    .btn {
+      display: block; text-align: center; padding: 11px 14px; border-radius: 9px;
+      font-weight: 700; font-size: 14px; text-decoration: none; transition: background 0.14s;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-h); }
+    .btn-secondary { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; }
+    .btn-secondary:hover { background: #273549; }
+    .faq { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 56px; }
+    .faq h3 { font-size: 20px; margin-bottom: 16px; }
+    .faq-item { margin-bottom: 14px; }
+    .faq-item strong { display: block; font-size: 14.5px; margin-bottom: 3px; color: #e0e7ff; }
+    .faq-item p { font-size: 13.5px; color: var(--muted); }
+    footer { text-align: center; padding: 28px 0 44px; border-top: 1px solid rgba(51,65,85,0.5); font-size: 13px; color: var(--muted); }
+    footer a { color: #a5b4fc; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <div class="brand"><span class="brand-dot">TS</span> TableSnap Studio</div>
+      <div class="nav-links">
+        <a href="#products">Products</a>
+        <a href="srt-tool.html">Free SRT Tool</a>
+        <a href="table-tool.html">Free Table Tool</a>
+        <a href="#faq">FAQ</a>
+        <a href="mailto:rpee0812@gmail.com">Support</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="pill">100% LOCAL · ZERO SUBSCRIPTIONS · BUILT FOR SPEED</div>
+      <h1>One-Time Tools That Save Hours Every Week</h1>
+      <p>No bloated SaaS subscriptions. No uploading your private files to unknown clouds. Buy once, run locally forever.</p>
+    </section>
+
+    <section id="products" class="grid">
+      <!-- Product 1: StreamKit Studio -->
+      <article class="card">
+        <div>
+          <div class="tag">For Streamers &amp; VTubers</div>
+          <h2>StreamKit Studio</h2>
+          <p>Zero-lag offline OBS Studio animated widget pack with a built-in point-and-click Visual Customizer.</p>
+          <ul class="list">
+            <li>✓ 4 Widgets: Goal Bar, Countdown, Social Rotator, Study Pomodoro</li>
+            <li>✓ 4 Pro Themes: Cyber Neon, Kawaii Pastel, Glass, Cozy Lofi</li>
+            <li>✓ 1-Click standalone .HTML export for OBS Browser Source</li>
+            <li>✓ Commercial streaming license included</li>
+          </ul>
+        </div>
+        <div>
+          <div class="price-row"><div class="price">$15 <span>one-time</span></div></div>
+          <div class="btns">
+            <a class="btn btn-primary" href="https://rpee0812.itch.io/streamkit-studio-obs-animated-widget-pack-customizer" target="_blank" rel="noopener">Get on itch.io ($15)</a>
+            <a class="btn btn-secondary" href="https://payhip.com/b/vdADZ" target="_blank" rel="noopener">Buy Direct on Payhip ($15)</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 2: SubCraft Pro -->
+      <article class="card">
+        <div>
+          <div class="tag">For YouTubers &amp; Editors</div>
+          <h2>SubCraft Pro</h2>
+          <p>Native Windows (.exe) &amp; macOS offline desktop subtitle studio for fixing, syncing, and merging SRT/VTT files.</p>
+          <ul class="list">
+            <li>✓ Free: Time Shift, HTML/SDH Clean, Overlap Fix, SRT/VTT/TXT</li>
+            <li>✓ Pro: Bilingual Subtitle Merger (align 2 languages automatically)</li>
+            <li>✓ Pro: Unlimited Batch Folder Cleaning &amp; FPS Speed Resync</li>
+            <li>✓ 100% offline — your transcripts never leave your PC</li>
+          </ul>
+        </div>
+        <div>
+          <div class="price-row"><div class="price">Free <span>/ $19 Pro</span></div></div>
+          <div class="btns">
+            <a class="btn btn-primary" href="https://rpee0812.itch.io/subcraft-pro-offline-srt-vtt-subtitle-studio-win-mac" target="_blank" rel="noopener">Download Free (Win &amp; Mac)</a>
+            <a class="btn btn-secondary" href="https://payhip.com/b/IEKZn" target="_blank" rel="noopener">Unlock Lifetime Pro ($19)</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 3: TableSnap -->
+      <article class="card">
+        <div>
+          <div class="tag">For Analysts &amp; Office Power Users</div>
+          <h2>TableSnap Extension</h2>
+          <p>Auto-detect any HTML table or repeating product list on any webpage and export cleanly to Excel (.xlsx), CSV, or Markdown.</p>
+          <ul class="list">
+            <li>✓ Free: Copy for Excel, Copy Markdown, UTF-8 BOM CSV</li>
+            <li>✓ Pro: Native formatted .XLSX &amp; JSON export</li>
+            <li>✓ Pro: Smart Card/List Detection &amp; Multi-Page Merge</li>
+            <li>✓ Zero tracking, zero cloud servers</li>
+          </ul>
+        </div>
+        <div>
+          <div class="price-row"><div class="price">Free <span>/ $9 Pro</span></div></div>
+          <div class="btns">
+            <a class="btn btn-primary" href="https://payhip.com/b/lOCqt" target="_blank" rel="noopener">Get TableSnap Pro ($9)</a>
+            <a class="btn btn-secondary" href="https://addons.mozilla.org/en-US/firefox/addon/tablesnap-%E7%B6%B2%E9%A0%81%E8%A1%A8%E6%A0%BC%E4%B8%80%E9%8D%B5%E5%8C%AF%E5%87%BA-excel-csv-m/" target="_blank" rel="noopener">Firefox Add-on Page</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="faq" class="faq">
+      <h3>Frequently Asked Questions &amp; Security</h3>
+      <div class="faq-item">
+        <strong>Why does Windows SmartScreen show a warning for SubCraftPro-Windows.exe?</strong>
+        <p>As an independent studio keeping tools affordable ($9–$19 one-time), we don't pay $400+/year for an EV Code Signing certificate yet. Click <em>More info → Run anyway</em> on Windows, or run the open Python macOS/Linux package directly. Zero telemetry, 100% offline.</p>
+      </div>
+      <div class="faq-item">
+        <strong>Are there any recurring subscriptions?</strong>
+        <p>Never. Every Pro license is a one-time payment with lifetime access and free v1.x updates.</p>
+      </div>
+      <div class="faq-item">
+        <strong>How do I get support or request a feature?</strong>
+        <p>Email us anytime at <a href="mailto:rpee0812@gmail.com" style="color:#a5b4fc">rpee0812@gmail.com</a> — we reply quickly.</p>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 TableSnap Studio · Built with privacy first · Contact: <a href="mailto:rpee0812@gmail.com">rpee0812@gmail.com</a>
+    </footer>
+  </div>
+</body>
+</html>
