@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free VTuber Weekly Stream Schedule Maker — Export 1920x1080 PNG (No Login)</title>
+  <meta name="description" content="Free 100% browser-local VTuber weekly stream schedule maker. Customize the Sakura Neko 7-day schedule (Mon–Sun, times, titles, LIVE/GAME/CHAT/OFF tags, accent color) and export a crisp 1920x1080 PNG with 1 click. No login or watermarks." />
+  <link rel="canonical" href="https://rpee0812.github.io/tablesnap-studio/vtuber-schedule.html" />
+  <meta property="og:title" content="Free VTuber Weekly Stream Schedule Maker — Export 1920x1080 PNG" />
+  <meta property="og:description" content="Create and export a crisp 1920x1080 PNG VTuber weekly stream schedule in seconds using the free Sakura Neko theme. 100% local, zero login." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://rpee0812.github.io/tablesnap-studio/vtuber-schedule.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Free VTuber Weekly Stream Schedule Maker (1920x1080 PNG)",
+    "applicationCategory": "DesignApplication",
+    "operatingSystem": "Web (Any Browser)",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free 100% browser-local VTuber weekly stream schedule maker with Sakura Neko theme and 1-click 1920x1080 PNG export."
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --panel: #131c31;
+      --panel-2: #0f172a;
+      --border: #28354f;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #6366f1;
+      --primary-h: #4f46e5;
+      --accent: #22d3ee;
+      --green: #10b981;
+      --pink: #f43f5e;
+      --amber: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 20% 0%, #1e1b4b 0%, var(--bg) 48%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 22px 64px; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+      padding: 20px 0; border-bottom: 1px solid rgba(51,65,85,0.5); margin-bottom: 28px;
+    }
+    .brand { font-weight: 800; font-size: 17px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; }
+    .brand-dot { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg, #6366f1, #22d3ee); display: inline-flex; align-items: center; justify-content: center; color: #0b1120; font-weight: 900; font-size: 13px; }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 18px; font-size: 14px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-weight: 600; }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+
+    .hero { margin-bottom: 24px; }
+    .pill {
+      display: inline-block; padding: 5px 13px; border-radius: 999px;
+      background: rgba(255,122,162,0.14); border: 1px solid rgba(255,122,162,0.45);
+      color: #fbcfe8; font-size: 11.5px; font-weight: 800; letter-spacing: 0.04em; margin-bottom: 12px;
+    }
+    h1 { font-size: clamp(26px, 4vw, 38px); line-height: 1.16; letter-spacing: -0.025em; margin-bottom: 10px; }
+    .sub { color: var(--muted); font-size: 15px; max-width: 800px; }
+
+    .workspace { display: grid; grid-template-columns: 420px 1fr; gap: 20px; align-items: start; margin-bottom: 30px; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 18px; }
+    .card-title { font-size: 15px; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .badge-free { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: rgba(16,185,129,0.16); border: 1px solid rgba(16,185,129,0.45); color: #6ee7b7; }
+    .badge-pro { font-size: 10.5px; font-weight: 800; padding: 2px 7px; border-radius: 999px; background: rgba(245,158,11,0.18); border: 1px solid rgba(245,158,11,0.45); color: #fde68a; }
+
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+    .field label { display: block; font-size: 11.5px; font-weight: 700; color: #cbd5e1; margin-bottom: 4px; }
+    input[type="text"], select {
+      width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--panel-2); color: #f8fafc; font-size: 13px; font-family: inherit;
+    }
+    input[type="text"]:focus, select:focus { outline: none; border-color: var(--primary); }
+    .color-row { display: flex; align-items: center; gap: 8px; }
+    input[type="color"] { width: 38px; height: 34px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel-2); cursor: pointer; padding: 2px; }
+    .swatches { display: flex; gap: 6px; }
+    .swatch { width: 22px; height: 22px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.28); cursor: pointer; }
+
+    .days-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+    .day-row {
+      display: grid; grid-template-columns: 44px 86px 1fr 78px; gap: 6px; align-items: center;
+      background: rgba(11,17,32,0.55); border: 1px solid rgba(40,53,79,0.75); border-radius: 10px; padding: 7px 8px;
+    }
+    .day-name { font-size: 12px; font-weight: 900; color: #fbcfe8; text-align: center; }
+    .day-row input[type="text"], .day-row select { padding: 6px 7px; font-size: 12px; }
+
+    .preview-wrap { position: sticky; top: 18px; }
+    .canvas-shell {
+      border-radius: 12px; overflow: hidden; border: 1px solid var(--border);
+      background: #090d16; box-shadow: 0 14px 36px rgba(0,0,0,0.45);
+    }
+    canvas#scheduleCanvas { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+
+    .action-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 10px 16px; border-radius: 9px; border: 1px solid var(--border);
+      background: #1e293b; color: #f8fafc; font-weight: 700; font-size: 13.5px;
+      cursor: pointer; text-decoration: none; transition: background 0.14s, filter 0.14s;
+    }
+    .btn:hover { background: #273549; }
+    .btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-h); }
+    .btn-sakura { background: linear-gradient(135deg, #ec4899, #f43f5e); border-color: transparent; color: #fff; }
+    .btn-sakura:hover { filter: brightness(1.08); }
+    .btn-booth { background: rgba(244,63,94,0.14); color: #fda4af; border: 1px solid rgba(244,63,94,0.45); }
+    .btn-booth:hover { background: rgba(244,63,94,0.24); color: #fff; }
+    .export-status { font-size: 12.5px; color: #34d399; font-weight: 700; min-height: 18px; }
+
+    /* Pro Themes & Upgrades */
+    .section-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; margin: 36px 0 16px; }
+    .section-head h2 { font-size: 23px; letter-spacing: -0.02em; }
+    .section-head p { font-size: 14px; color: var(--muted); }
+    .pro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .pro-card {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 12px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .pro-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .swatch-banner {
+      height: 54px; border-radius: 9px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 14px; font-weight: 800; font-size: 12px; letter-spacing: 0.04em;
+    }
+    .sb-mecha { background: linear-gradient(135deg, #180810, #3b0a1a); border: 1px solid #f43f5e; color: #fda4af; }
+    .sb-star { background: linear-gradient(135deg, #0d1330, #1f1b4d); border: 1px solid #fbbf24; color: #fde68a; }
+    .sb-retro { background: linear-gradient(135deg, #0e1029, #2b0f47); border: 1px solid #22d3ee; color: #67e8f9; }
+    .sb-obs { background: linear-gradient(135deg, #0b1f2e, #1b1742); border: 1px solid #10b981; color: #6ee7b7; }
+    .pro-card h3 { font-size: 15.5px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+    .pro-card p { font-size: 13px; color: var(--muted); }
+
+    .cross { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+    .cross-card {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 20px;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 14px;
+    }
+    .cross-card h3 { font-size: 17px; margin-bottom: 4px; }
+    .cross-card p { font-size: 13.5px; color: var(--muted); }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    footer { text-align: center; padding-top: 24px; border-top: 1px solid rgba(51,65,85,0.5); font-size: 13px; color: var(--muted); }
+    footer a { color: #a5b4fc; text-decoration: none; }
+
+    @media (max-width: 960px) { .workspace, .cross { grid-template-columns: 1fr; } .preview-wrap { position: static; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="index.html"><span class="brand-dot">TS</span> TableSnap Studio</a>
+      <div class="nav-links">
+        <a href="index.html">Products</a>
+        <a href="obs-chat-css.html">Free Chat CSS</a>
+        <a href="vtuber-schedule.html" class="active">Free Schedule Maker</a>
+        <a href="srt-tool.html">Free SRT Tool</a>
+        <a href="table-tool.html">Free Table Tool</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="pill">100% BROWSER-LOCAL · PURE CANVAS 2D · CRISP 1920×1080 PNG EXPORT</div>
+      <h1>Free VTuber Weekly Stream Schedule Maker (1920×1080 PNG)</h1>
+      <p class="sub">Design your weekly streaming schedule with the free <strong>Sakura Neko</strong> theme. Edit Mon–Sun times, titles, and <code>LIVE</code> / <code>GAME</code> / <code>CHAT</code> / <code>OFF</code> badges, then export a ready-to-post <strong>1920×1080 PNG</strong> for X (Twitter), Discord, and OBS.</p>
+    </section>
+
+    <section class="workspace">
+      <!-- Left: Interactive 7-Day Editor -->
+      <div class="card">
+        <div class="card-title">
+          <span>🐱 Sakura Neko Schedule Editor</span>
+          <span class="badge-free">FREE THEME</span>
+        </div>
+
+        <div class="meta-grid">
+          <div class="field">
+            <label for="channelName">Channel Name</label>
+            <input type="text" id="channelName" value="SAKURA NEKO" maxlength="28" />
+          </div>
+          <div class="field">
+            <label for="channelHandle">Handle / Tag</label>
+            <input type="text" id="channelHandle" value="@sakuraneko_vt" maxlength="28" />
+          </div>
+          <div class="field">
+            <label for="weekLabel">Week &amp; Timezone</label>
+            <input type="text" id="weekLabel" value="NOV 26 – DEC 2 · JST / EST" maxlength="32" />
+          </div>
+          <div class="field">
+            <label>Accent Color</label>
+            <div class="color-row">
+              <input type="color" id="accentColor" value="#ff7aa2" aria-label="Accent Color" />
+              <div class="swatches">
+                <button type="button" class="swatch" data-color="#ff7aa2" style="background:#ff7aa2" title="Sakura Pink"></button>
+                <button type="button" class="swatch" data-color="#a78bfa" style="background:#a78bfa" title="Lavender"></button>
+                <button type="button" class="swatch" data-color="#38bdf8" style="background:#38bdf8" title="Sky"></button>
+                <button type="button" class="swatch" data-color="#34d399" style="background:#34d399" title="Mint"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="days-list" id="daysEditor"></div>
+      </div>
+
+      <!-- Right: Live 1920x1080 Preview + Export -->
+      <div class="card preview-wrap">
+        <div class="card-title">
+          <span>Live 1920×1080 Preview</span>
+          <span style="font-size:12px;color:var(--muted);font-weight:600;">16:9 Full HD · Zero Watermark</span>
+        </div>
+
+        <div class="canvas-shell">
+          <canvas id="scheduleCanvas" width="1920" height="1080"></canvas>
+        </div>
+
+        <div class="action-bar">
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <button type="button" class="btn btn-sakura" id="exportPngBtn">⬇ Export 1920×1080 PNG</button>
+            <button type="button" class="btn" id="resetScheduleBtn">Reset Sample</button>
+          </div>
+          <div class="export-status" id="exportStatus">Ready — 1920×1080 Canvas</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pro Themes + Live OBS HTML Export -->
+    <div class="section-head">
+      <div>
+        <h2>Upgrade to All 4 Illustrated Themes + Live OBS HTML Export</h2>
+        <p>Need Mecha Crimson, Starlight Grimoire, Retro Arcade, animated OBS Browser Source widgets, or matching 4-scene frames?</p>
+      </div>
+      <span class="badge-pro">PRO PACKS · ONE-TIME PAYMENT</span>
+    </div>
+
+    <section class="pro-grid">
+      <article class="pro-card">
+        <div>
+          <div class="swatch-banner sb-mecha"><span>MECHA CRIMSON</span><span>🔒 PRO</span></div>
+          <h3 style="margin-top:12px;">Mecha Crimson</h3>
+          <p>Tactical HUD schedule &amp; matching 4-scene OBS overlays with crimson warning stripes and cyber grid frames.</p>
+        </div>
+        <a class="btn btn-primary" href="https://rpee0812.itch.io/streamkit-studio-obs-animated-widget-pack-customizer" target="_blank" rel="noopener">Unlock in StreamKit v3.0 ($15)</a>
+      </article>
+
+      <article class="pro-card">
+        <div>
+          <div class="swatch-banner sb-star"><span>STARLIGHT GRIMOIRE</span><span>🔒 PRO</span></div>
+          <h3 style="margin-top:12px;">Starlight Grimoire</h3>
+          <p>Celestial gold-foil magic tome aesthetic with constellation borders for fantasy &amp; arcane VTubers.</p>
+        </div>
+        <a class="btn btn-primary" href="https://rpee0812.itch.io/overlayframe-studio-1920x1080-4-scene-obs-overlay-generator-png-html" target="_blank" rel="noopener">Unlock in OverlayFrame ($12)</a>
+      </article>
+
+      <article class="pro-card">
+        <div>
+          <div class="swatch-banner sb-retro"><span>RETRO ARCADE</span><span>🔒 PRO</span></div>
+          <h3 style="margin-top:12px;">Retro Arcade</h3>
+          <p>Pixel-art CRT cabinet frames with neon synth highlights for retro gaming, speedrun, and chiptune streams.</p>
+        </div>
+        <a class="btn btn-primary" href="https://rpee0812.itch.io/streamkit-studio-obs-animated-widget-pack-customizer" target="_blank" rel="noopener">Unlock in StreamKit v3.0 ($15)</a>
+      </article>
+
+      <article class="pro-card">
+        <div>
+          <div class="swatch-banner sb-obs"><span>LIVE OBS .HTML EXPORT</span><span>🔒 PRO</span></div>
+          <h3 style="margin-top:12px;">Live OBS HTML + Control Deck</h3>
+          <p>Export animated OBS Browser Source schedules, Goal Bars, Countdowns &amp; Tickers updated live mid-stream.</p>
+        </div>
+        <a class="btn btn-primary" href="https://rpee0812.itch.io/streamkit-studio-obs-animated-widget-pack-customizer" target="_blank" rel="noopener">Get StreamKit Studio v3.0 ($15)</a>
+      </article>
+    </section>
+
+    <!-- Paid Product Cards -->
+    <section class="cross">
+      <div class="cross-card">
+        <div>
+          <h3>🎮 StreamKit Studio v3.0 — $15 / ¥2,200</h3>
+          <p>OBS Live Control Deck + 6 animated offline widgets (Goal Bar, Countdown, Social Rotator, Pomodoro, 1920×1080 Weekly Schedule &amp; Live Ticker) across 4 themes.</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="https://rpee0812.itch.io/streamkit-studio-obs-animated-widget-pack-customizer" target="_blank" rel="noopener">itch.io ($15)</a>
+          <a class="btn" href="https://payhip.com/b/vdADZ" target="_blank" rel="noopener">Payhip ($15)</a>
+          <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9227435" target="_blank" rel="noopener">BOOTH JP (¥2,200)</a>
+        </div>
+      </div>
+
+      <div class="cross-card">
+        <div>
+          <h3>🖼️ OverlayFrame Studio v1.0 — $12 / ¥1,800</h3>
+          <p>Complete 1920×1080 4-scene OBS broadcast frames (Starting Soon, Just Chatting, Gaming 16:9 Cutout &amp; Stream Ending) with 1-click PNG + Animated HTML export.</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="https://rpee0812.itch.io/overlayframe-studio-1920x1080-4-scene-obs-overlay-generator-png-html" target="_blank" rel="noopener">itch.io ($12)</a>
+          <a class="btn" href="https://payhip.com/b/oQrd2" target="_blank" rel="noopener">Payhip ($12)</a>
+          <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9228805" target="_blank" rel="noopener">BOOTH JP (¥1,800)</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 <a href="index.html">TableSnap Studio</a> · Need custom chat overlays too? Try our <a href="obs-chat-css.html">Free OBS Chat CSS Generator</a> · <a href="mailto:rpee0812@gmail.com">Support</a>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const DEFAULT_DAYS = [
+        { day: 'MON', time: '20:00 JST', title: 'Cozy Tea & Weekly Catch-Up', tag: 'CHAT' },
+        { day: 'TUE', time: '21:00 JST', title: 'Elden Ring Boss Rush Challenge', tag: 'GAME' },
+        { day: 'WED', time: 'OFF DAY',   title: 'Rest & Sketching New Emotes', tag: 'OFF'  },
+        { day: 'THU', time: '20:30 JST', title: 'Singing & Karaoke Request Night', tag: 'LIVE' },
+        { day: 'FRI', time: '21:00 JST', title: 'Collab Mario Kart Viewer Lobby', tag: 'GAME' },
+        { day: 'SAT', time: '19:00 JST', title: 'New Outfit Reveal & Celebration!', tag: 'LIVE' },
+        { day: 'SUN', time: '20:00 JST', title: 'Late Night Drawing & Q&A', tag: 'CHAT' }
+      ];
+
+      let days = DEFAULT_DAYS.map(d => ({ ...d }));
+      const canvas = document.getElementById('scheduleCanvas');
+      const ctx = canvas.getContext('2d');
+      const daysEditor = document.getElementById('daysEditor');
+      const exportStatus = document.getElementById('exportStatus');
+
+      const TAG_STYLES = {
+        LIVE: { bg: '#f43f5e', text: '#ffffff' },
+        GAME: { bg: '#6366f1', text: '#ffffff' },
+        CHAT: { bg: '#10b981', text: '#042f2e' },
+        OFF:  { bg: '#334155', text: '#cbd5e1' }
+      };
+
+      function hexToRgb(hex) {
+        const c = hex.replace('#', '');
+        const n = parseInt(c, 16);
+        return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+      }
+
+      function roundRect(ctx, x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + w - r, y);
+        ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+        ctx.lineTo(x + w, y + h - r);
+        ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        ctx.lineTo(x + r, y + h);
+        ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+        ctx.lineTo(x, y + r);
+        ctx.quadraticCurveTo(x, y, x + r, y);
+        ctx.closePath();
+      }
+
+      function drawPetal(ctx, x, y, size, angle, color, alpha) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(-size * 0.6, -size * 0.5, -size * 0.5, -size * 1.4, 0, -size * 1.5);
+        ctx.bezierCurveTo(size * 0.5, -size * 1.4, size * 0.6, -size * 0.5, 0, 0);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function drawNekoEmblem(ctx, cx, cy, accent) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        // Ears
+        ctx.fillStyle = accent;
+        ctx.beginPath();
+        ctx.moveTo(-42, -12); ctx.lineTo(-30, -54); ctx.lineTo(-4, -28); ctx.closePath();
+        ctx.moveTo(42, -12); ctx.lineTo(30, -54); ctx.lineTo(4, -28); ctx.closePath();
+        ctx.fill();
+        // Inner ears
+        ctx.fillStyle = '#ffe4ef';
+        ctx.beginPath();
+        ctx.moveTo(-34, -18); ctx.lineTo(-27, -42); ctx.lineTo(-12, -26); ctx.closePath();
+        ctx.moveTo(34, -18); ctx.lineTo(27, -42); ctx.lineTo(12, -26); ctx.closePath();
+        ctx.fill();
+        // Head circle
+        ctx.fillStyle = '#1f1629';
+        ctx.strokeStyle = accent;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(0, 0, 42, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        // Cute eyes & smile
+        ctx.strokeStyle = '#ffd6e5';
+        ctx.lineWidth = 3.5;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.arc(-14, -2, 6, Math.PI, 0);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(14, -2, 6, Math.PI, 0);
+        ctx.stroke();
+        // Blush
+        ctx.fillStyle = accent;
+        ctx.globalAlpha = 0.55;
+        ctx.beginPath();
+        ctx.ellipse(-22, 8, 7, 4, 0, 0, Math.PI * 2);
+        ctx.ellipse(22, 8, 7, 4, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        // Cat mouth "w"
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2.6;
+        ctx.beginPath();
+        ctx.arc(-5, 11, 5, 0, Math.PI);
+        ctx.arc(5, 11, 5, 0, Math.PI);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function renderSchedule() {
+        const W = 1920, H = 1080;
+        const channel = (document.getElementById('channelName').value || 'SAKURA NEKO').trim();
+        const handle = (document.getElementById('channelHandle').value || '@sakuraneko_vt').trim();
+        const weekLabel = (document.getElementById('weekLabel').value || 'WEEKLY STREAM SCHEDULE').trim();
+        const accent = document.getElementById('accentColor').value || '#ff7aa2';
+        const rgb = hexToRgb(accent);
+
+        // Background gradient
+        const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+        bgGrad.addColorStop(0, '#140e1f');
+        bgGrad.addColorStop(0.5, '#1d152b');
+        bgGrad.addColorStop(1, '#101428');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, W, H);
+
+        // Ambient glow blobs
+        const g1 = ctx.createRadialGradient(280, 160, 20, 280, 160, 560);
+        g1.addColorStop(0, `rgba(${rgb.r},${rgb.g},${rgb.b},0.25)`);
+        g1.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g1;
+        ctx.fillRect(0, 0, W, H);
+
+        const g2 = ctx.createRadialGradient(1680, 920, 20, 1680, 920, 540);
+        g2.addColorStop(0, 'rgba(99,102,241,0.22)');
+        g2.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g2;
+        ctx.fillRect(0, 0, W, H);
+
+        // Subtle dot grid
+        ctx.fillStyle = 'rgba(255,255,255,0.045)';
+        for (let gx = 48; gx < W; gx += 48) {
+          for (let gy = 48; gy < H; gy += 48) {
+            ctx.fillRect(gx, gy, 3, 3);
+          }
+        }
+
+        // Drifting Sakura Petals
+        const petals = [
+          [140, 110, 18, 0.4, 0.45], [440, 80, 14, 1.1, 0.32], [1760, 130, 22, -0.5, 0.45],
+          [1820, 420, 16, 0.8, 0.3], [90, 620, 20, -0.7, 0.35], [1640, 980, 18, 0.3, 0.35],
+          [920, 1020, 15, 1.4, 0.28], [1340, 95, 16, -0.3, 0.34]
+        ];
+        petals.forEach(([px, py, s, a, al]) => drawPetal(ctx, px, py, s, a, accent, al));
+
+        // Outer decorative frame
+        roundRect(ctx, 36, 36, W - 72, H - 72, 30);
+        ctx.strokeStyle = `rgba(${rgb.r},${rgb.g},${rgb.b},0.48)`;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // Header Bar
+        drawNekoEmblem(ctx, 132, 136, accent);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 58px "Segoe UI", Inter, sans-serif';
+        ctx.fillText(channel, 208, 132);
+
+        ctx.fillStyle = '#fbcfe8';
+        ctx.font = '700 26px "Segoe UI", Inter, sans-serif';
+        ctx.fillText(`WEEKLY STREAM SCHEDULE  ·  ${handle}`, 210, 174);
+
+        // Week Pill on top right
+        ctx.font = '800 24px "Segoe UI", Inter, sans-serif';
+        const pillText = weekLabel;
+        const pillW = Math.max(320, ctx.measureText(pillText).width + 64);
+        const pillX = W - 84 - pillW;
+        roundRect(ctx, pillX, 98, pillW, 64, 32);
+        ctx.fillStyle = `rgba(${rgb.r},${rgb.g},${rgb.b},0.22)`;
+        ctx.fill();
+        ctx.strokeStyle = accent;
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+        ctx.fillStyle = '#fff6fa';
+        ctx.textAlign = 'center';
+        ctx.fillText(pillText, pillX + pillW / 2, 139);
+        ctx.textAlign = 'left';
+
+        // Divider line
+        ctx.strokeStyle = `rgba(${rgb.r},${rgb.g},${rgb.b},0.3)`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(84, 214);
+        ctx.lineTo(W - 84, 214);
+        ctx.stroke();
+
+        // 2 columns x 4 rows grid (7 days + 1 cozy note card)
+        const startX = 84, startY = 248;
+        const colW = 856, rowH = 166, gapX = 40, gapY = 24;
+
+        days.forEach((item, idx) => {
+          const col = idx < 4 ? 0 : 1;
+          const row = idx < 4 ? idx : idx - 4;
+          const x = startX + col * (colW + gapX);
+          const y = startY + row * (rowH + gapY);
+          const isOff = item.tag === 'OFF';
+
+          // Card background
+          roundRect(ctx, x, y, colW, rowH, 22);
+          ctx.fillStyle = isOff ? 'rgba(20, 24, 42, 0.72)' : 'rgba(30, 22, 44, 0.88)';
+          ctx.fill();
+          ctx.strokeStyle = isOff ? 'rgba(148,163,184,0.28)' : `rgba(${rgb.r},${rgb.g},${rgb.b},0.55)`;
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
+
+          // Left accent bar
+          roundRect(ctx, x, y, 14, rowH, 7);
+          ctx.fillStyle = isOff ? '#475569' : accent;
+          ctx.fill();
+
+          // Day Pill
+          roundRect(ctx, x + 32, y + 28, 126, 110, 18);
+          ctx.fillStyle = isOff ? 'rgba(51,65,85,0.45)' : `rgba(${rgb.r},${rgb.g},${rgb.b},0.2)`;
+          ctx.fill();
+          ctx.fillStyle = isOff ? '#94a3b8' : '#ffd6e5';
+          ctx.font = '900 36px "Segoe UI", Inter, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(item.day, x + 95, y + 96);
+          ctx.textAlign = 'left';
+
+          // Time
+          ctx.fillStyle = isOff ? '#94a3b8' : accent;
+          ctx.font = '800 24px Consolas, "Segoe UI", monospace';
+          ctx.fillText(item.time || '', x + 184, y + 66);
+
+          // Tag Badge
+          const tStyle = TAG_STYLES[item.tag] || TAG_STYLES.LIVE;
+          const badgeW = 104, badgeH = 38;
+          roundRect(ctx, x + colW - badgeW - 28, y + 32, badgeW, badgeH, 19);
+          ctx.fillStyle = tStyle.bg;
+          ctx.fill();
+          ctx.fillStyle = tStyle.text;
+          ctx.font = '900 20px "Segoe UI", Inter, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(item.tag, x + colW - badgeW / 2 - 28, y + 58);
+          ctx.textAlign = 'left';
+
+          // Title (auto-truncate cleanly if very long)
+          ctx.fillStyle = isOff ? '#cbd5e1' : '#ffffff';
+          ctx.font = '700 32px "Segoe UI", Inter, sans-serif';
+          let titleText = item.title || '';
+          const maxW = colW - 220;
+          while (titleText.length > 3 && ctx.measureText(titleText).width > maxW) {
+            titleText = titleText.slice(0, -2) + '…';
+          }
+          ctx.fillText(titleText, x + 184, y + 122);
+        });
+
+        // 8th slot: Cozy Sakura Ribbon Info Card
+        const bx = startX + (colW + gapX);
+        const by = startY + 3 * (rowH + gapY);
+        roundRect(ctx, bx, by, colW, rowH, 22);
+        const infoGrad = ctx.createLinearGradient(bx, by, bx + colW, by + rowH);
+        infoGrad.addColorStop(0, `rgba(${rgb.r},${rgb.g},${rgb.b},0.22)`);
+        infoGrad.addColorStop(1, 'rgba(99,102,241,0.18)');
+        ctx.fillStyle = infoGrad;
+        ctx.fill();
+        ctx.strokeStyle = `rgba(${rgb.r},${rgb.g},${rgb.b},0.6)`;
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffd6e5';
+        ctx.font = '800 24px "Segoe UI", Inter, sans-serif';
+        ctx.fillText('✿  STREAM NOTES & REMINDERS', bx + 36, by + 62);
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '600 26px "Segoe UI", Inter, sans-serif';
+        ctx.fillText(`Times may shift slightly — follow ${handle} for live pings!`, bx + 36, by + 114);
+
+        // Footer bar inside frame
+        ctx.fillStyle = 'rgba(203,213,225,0.65)';
+        ctx.font = '600 20px "Segoe UI", Inter, sans-serif';
+        ctx.fillText('SAKURA NEKO EDITION · 1920×1080 HD', 84, H - 56);
+        ctx.textAlign = 'right';
+        ctx.fillText(handle, W - 84, H - 56);
+        ctx.textAlign = 'left';
+      }
+
+      function buildEditor() {
+        daysEditor.innerHTML = '';
+        days.forEach((d, i) => {
+          const row = document.createElement('div');
+          row.className = 'day-row';
+
+          const lbl = document.createElement('div');
+          lbl.className = 'day-name';
+          lbl.textContent = d.day;
+
+          const timeIn = document.createElement('input');
+          timeIn.type = 'text';
+          timeIn.value = d.time;
+          timeIn.placeholder = '20:00 JST';
+          timeIn.setAttribute('aria-label', `${d.day} Time`);
+          timeIn.addEventListener('input', () => { days[i].time = timeIn.value; renderSchedule(); });
+
+          const titleIn = document.createElement('input');
+          titleIn.type = 'text';
+          titleIn.value = d.title;
+          titleIn.placeholder = 'Stream title';
+          titleIn.setAttribute('aria-label', `${d.day} Title`);
+          titleIn.addEventListener('input', () => { days[i].title = titleIn.value; renderSchedule(); });
+
+          const tagSel = document.createElement('select');
+          tagSel.setAttribute('aria-label', `${d.day} Tag`);
+          ['LIVE', 'GAME', 'CHAT', 'OFF'].forEach(t => {
+            const opt = document.createElement('option');
+            opt.value = t;
+            opt.textContent = t;
+            if (d.tag === t) opt.selected = true;
+            tagSel.appendChild(opt);
+          });
+          tagSel.addEventListener('change', () => { days[i].tag = tagSel.value; renderSchedule(); });
+
+          row.appendChild(lbl);
+          row.appendChild(timeIn);
+          row.appendChild(titleIn);
+          row.appendChild(tagSel);
+          daysEditor.appendChild(row);
+        });
+      }
+
+      function exportPNG() {
+        renderSchedule();
+        const dataUrl = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = 'vtuber-schedule-1920x1080.png';
+        a.click();
+        exportStatus.textContent = '✓ Exported 1920×1080 PNG (100% local)!';
+        return dataUrl;
+      }
+
+      window.exportSchedulePNG = exportPNG;
+
+      ['channelName', 'channelHandle', 'weekLabel', 'accentColor'].forEach(id => {
+        document.getElementById(id).addEventListener('input', renderSchedule);
+      });
+      document.querySelectorAll('.swatch').forEach(sw => {
+        sw.addEventListener('click', () => {
+          document.getElementById('accentColor').value = sw.dataset.color;
+          renderSchedule();
+        });
+      });
+
+      document.getElementById('exportPngBtn').addEventListener('click', exportPNG);
+      document.getElementById('resetScheduleBtn').addEventListener('click', () => {
+        days = DEFAULT_DAYS.map(d => ({ ...d }));
+        document.getElementById('channelName').value = 'SAKURA NEKO';
+        document.getElementById('channelHandle').value = '@sakuraneko_vt';
+        document.getElementById('weekLabel').value = 'NOV 26 – DEC 2 · JST / EST';
+        document.getElementById('accentColor').value = '#ff7aa2';
+        buildEditor();
+        renderSchedule();
+        exportStatus.textContent = 'Reset to Sakura Neko sample';
+      });
+
+      buildEditor();
+      renderSchedule();
+    })();
+  </script>
+</body>
+</html>
