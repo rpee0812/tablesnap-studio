@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rpee0812.github.io/tablesnap-studio/sitemap.xml

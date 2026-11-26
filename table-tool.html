@@ -6,7 +6,7 @@
   <title>Free Online HTML Table to CSV &amp; Markdown Converter — TableSnap</title>
   <meta name="description" content="Convert any HTML table or pasted spreadsheet data into clean UTF-8 BOM CSV (Excel-safe) or GitHub Markdown table instantly in your browser." />
   <style>
-    :root { --bg:#0c0c0f; --panel:#141418; --border:#272730; --text:#f4f4f5; --muted:#9494a3; }
+    :root { --bg:#0c0c0f; --panel:#141418; --border:#272730; --text:#f4f4f5; --muted:#9494a3; --pro:#fbbf24; }
     * { box-sizing:border-box; margin:0; padding:0; }
     body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif; line-height:1.6; }
     .wrap { max-width:980px; margin:0 auto; padding:24px 20px 64px; }
@@ -15,17 +15,33 @@
     nav a:hover { color:#fff; }
     h1 { font-size:30px; letter-spacing:-0.02em; margin-bottom:8px; }
     .sub { color:var(--muted); font-size:15px; margin-bottom:22px; }
-    .card { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:20px; }
+    .card { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:22px; }
     .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-    textarea { width:100%; height:280px; background:#09090b; border:1px solid var(--border); border-radius:10px; padding:12px; color:#e4e4e7; font-family:Consolas,monospace; font-size:12.5px; resize:vertical; }
-    .btns { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
-    .btn { padding:9px 16px; border-radius:8px; border:1px solid var(--border); background:#1d1d23; color:#fff; font-weight:700; font-size:13px; cursor:pointer; text-decoration:none; }
+    textarea { width:100%; height:260px; background:#09090b; border:1px solid var(--border); border-radius:10px; padding:12px; color:#e4e4e7; font-family:Consolas,monospace; font-size:12.5px; resize:vertical; }
+    .btns { display:flex; flex-wrap:wrap; gap:9px; margin-top:14px; }
+    .btn { padding:9px 14px; border-radius:8px; border:1px solid var(--border); background:#1d1d23; color:#fff; font-weight:700; font-size:13px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
     .btn-primary { background:#f4f4f5; color:#09090b; border-color:#f4f4f5; }
-    .cta { background:linear-gradient(135deg, #16161d, #111827); border:1px solid #3f3f4a; border-radius:14px; padding:24px; display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
-    .cta h2 { font-size:20px; margin-bottom:4px; }
-    .cta p { font-size:14px; color:var(--muted); max-width:560px; }
-    .status { font-size:12.5px; color:#34d399; margin-top:8px; min-height:18px; }
-    @media (max-width:740px) { .grid { grid-template-columns:1fr; } }
+    .btn-pro { background:rgba(245,158,11,0.12); border-color:rgba(245,158,11,0.45); color:#fde68a; }
+    .btn-pro:hover { background:rgba(245,158,11,0.22); }
+    .pro-pill { font-size:10px; font-weight:800; padding:1px 5px; border-radius:4px; background:#f59e0b; color:#451a03; }
+    .status { font-size:12.5px; color:#34d399; margin-top:10px; min-height:18px; }
+    .compare { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:12px; }
+    .compare th, .compare td { padding:10px 12px; border-bottom:1px solid var(--border); text-align:left; }
+    .compare th { color:#a1a1aa; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; }
+    .yes { color:#34d399; font-weight:700; }
+    .no { color:#71717a; }
+    .cross { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px; }
+    .cross-card { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .cross-card h3 { font-size:15px; margin-bottom:2px; }
+    .cross-card p { font-size:12.5px; color:var(--muted); }
+    /* Modal */
+    .modal-bg { position:fixed; inset:0; background:rgba(0,0,0,0.72); display:none; align-items:center; justify-content:center; padding:20px; z-index:99; }
+    .modal-bg.open { display:flex; }
+    .modal { background:#141418; border:1px solid #3f3f4a; border-radius:16px; max-width:540px; width:100%; padding:24px; box-shadow:0 24px 60px rgba(0,0,0,0.65); }
+    .modal h2 { font-size:21px; margin-bottom:6px; }
+    .modal p { font-size:14px; color:var(--muted); margin-bottom:14px; }
+    .modal ul { list-style:none; display:flex; flex-direction:column; gap:7px; font-size:13.5px; color:#e4e4e7; margin-bottom:18px; }
+    @media (max-width:740px) { .grid, .cross { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -39,7 +55,7 @@
     </nav>
 
     <h1>Free HTML Table to CSV &amp; Markdown Converter</h1>
-    <p class="sub">Paste raw HTML <code>&lt;table&gt;</code> markup or tab-separated rows below. Export clean UTF-8 BOM <code>.CSV</code> (no Excel garbled Chinese/Japanese text) or Markdown tables instantly.</p>
+    <p class="sub">Paste raw HTML <code>&lt;table&gt;</code> markup or tab-separated rows below for a quick free conversion — or skip F12 copy-pasting forever with the <strong>TableSnap Browser Extension</strong>.</p>
 
     <div class="card">
       <div class="grid">
@@ -47,7 +63,7 @@
           <label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px">Input HTML Table or TSV</label>
           <textarea id="inBox">&lt;table&gt;
   &lt;tr&gt;&lt;th&gt;Product&lt;/th&gt;&lt;th&gt;Region&lt;/th&gt;&lt;th&gt;Revenue&lt;/th&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;Keyboard Pro&lt;/td&gt;&lt;td&gt;US&lt;/td&gt;&lt;td&gt;$12,450&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Keyboard Pro&lt;/td&gt;&lt;td&gt;US&lt;/td&gt;&lt;td&gt;$12,450.00&lt;/td&gt;&lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt;無線滑鼠&lt;/td&gt;&lt;td&gt;Taiwan&lt;/td&gt;&lt;td&gt;NT$ 38,500&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;</textarea>
         </div>
@@ -56,23 +72,69 @@
           <textarea id="outBox" readonly></textarea>
         </div>
       </div>
+
       <div class="btns">
         <button class="btn btn-primary" id="toMdBtn">Convert to Markdown</button>
         <button class="btn" id="toCsvBtn">Convert to CSV</button>
         <button class="btn" id="copyBtn">Copy Output</button>
         <button class="btn" id="dlCsvBtn">Download UTF-8 .CSV</button>
       </div>
+
+      <div class="btns" style="padding-top:10px;border-top:1px dashed var(--border);">
+        <button class="btn btn-pro" data-pro="Formatted Excel (.XLSX) Export">🔒 Download Formatted Excel (.XLSX) <span class="pro-pill">PRO</span></button>
+        <button class="btn btn-pro" data-pro="Auto Currency &amp; Number Cleaner">🔒 Clean Currency ($12,450 → 12450) <span class="pro-pill">PRO</span></button>
+        <button class="btn btn-pro" data-pro="1-Click Webpage Grab (No F12 Needed)">🔒 Skip F12: Grab Any Webpage Directly <span class="pro-pill">EXT</span></button>
+      </div>
       <div class="status" id="statusMsg"></div>
     </div>
 
-    <div class="cta">
-      <div>
-        <h2>Want 1-Click Export Directly From Any Webpage?</h2>
-        <p>Install the free <strong>TableSnap Browser Extension</strong> to auto-detect tables &amp; product lists on any site and export native formatted Excel (<code>.xlsx</code>), CSV, Markdown, or JSON.</p>
+    <!-- Clear Free Web Tool vs Pro Extension Comparison -->
+    <div class="card">
+      <h2 style="font-size:19px;margin-bottom:4px;">Why Users Upgrade from This Free Page to TableSnap Pro ($9 One-Time)</h2>
+      <p style="font-size:13.5px;color:var(--muted);">This free web page works for occasional manual copy-pasting. TableSnap Pro eliminates the repetitive steps when you pull web data every week:</p>
+      <table class="compare">
+        <thead>
+          <tr><th>Workflow</th><th>Free Online Page</th><th>TableSnap Pro ($9 One-Time)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Grab tables from any website</td><td class="no">Must open F12 DevTools &amp; copy HTML</td><td class="yes">✓ 1-Click Auto-Detect &amp; Visual Highlight</td></tr>
+          <tr><td>Formatted Excel (<code>.xlsx</code>) with bold headers &amp; auto-width</td><td class="no">CSV only</td><td class="yes">✓ Native Styled .XLSX + Clean JSON</td></tr>
+          <tr><td>Strip <code>$</code>, <code>NT$</code>, commas so Excel <code>SUM()</code> works</td><td class="no">Manual cleanup</td><td class="yes">✓ 1-Click Auto Number Cleaner</td></tr>
+          <tr><td>Scrape non-table product cards &amp; multi-page lists</td><td class="no">Not possible</td><td class="yes">✓ Smart List Detector + Multi-Page Merge</td></tr>
+        </tbody>
+      </table>
+      <div class="btns" style="margin-top:16px;">
+        <a class="btn btn-primary" href="https://payhip.com/b/lOCqt" target="_blank" rel="noopener">Unlock TableSnap Pro — $9 One-Time</a>
+        <a class="btn" href="https://addons.mozilla.org/en-US/firefox/addon/tablesnap-%E7%B6%B2%E9%A0%81%E8%A1%A8%E6%A0%BC%E4%B8%80%E9%8D%B5%E5%8C%AF%E5%87%BA-excel-csv-m/" target="_blank" rel="noopener">Install Free Extension (Firefox)</a>
       </div>
-      <div style="display:flex;gap:10px;">
-        <a class="btn btn-primary" href="https://addons.mozilla.org/en-US/firefox/addon/tablesnap-%E7%B6%B2%E9%A0%81%E8%A1%A8%E6%A0%BC%E4%B8%80%E9%8D%B5%E5%8C%AF%E5%87%BA-excel-csv-m/" target="_blank" rel="noopener">Install Free (Firefox)</a>
-        <a class="btn" href="https://payhip.com/b/lOCqt" target="_blank" rel="noopener">Get Pro ($9)</a>
+    </div>
+
+    <div class="cross">
+      <div class="cross-card">
+        <div><h3>🎬 SubCraft Pro ($19)</h3><p>Offline Win &amp; Mac subtitle studio: Bilingual SRT Merger + 50-file Batch Cleaner.</p></div>
+        <a class="btn" href="srt-tool.html">Try Free</a>
+      </div>
+      <div class="cross-card">
+        <div><h3>🎮 StreamKit Studio ($15)</h3><p>4 illustrated offline OBS widgets (Sakura Neko, Mecha Crimson, Arcane, Pixel).</p></div>
+        <a class="btn" href="https://rpee0812.itch.io/streamkit-studio-obs-animated-widget-pack-customizer" target="_blank" rel="noopener">View Pack</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upgrade Modal -->
+  <div class="modal-bg" id="proModal">
+    <div class="modal">
+      <h2 id="modalTitle">Unlock TableSnap Pro</h2>
+      <p>Stop opening F12 DevTools and fixing broken columns by hand. TableSnap Pro runs 100% locally in your browser for a single <strong>$9 one-time payment</strong> (no subscription).</p>
+      <ul>
+        <li>✓ <strong>1-Click Webpage Grab</strong> — No more copying raw HTML</li>
+        <li>✓ <strong>Native Formatted .XLSX</strong> — Styled headers, auto-sized columns, real numbers</li>
+        <li>✓ <strong>Smart List Detection</strong> — Scrape e-commerce product cards &amp; paginated lists</li>
+        <li>✓ <strong>Auto Currency Cleaner</strong> — Turns <code>$12,450.00</code> into math-ready <code>12450.00</code></li>
+      </ul>
+      <div class="btns">
+        <a class="btn btn-primary" href="https://payhip.com/b/lOCqt" target="_blank" rel="noopener">Get TableSnap Pro ($9 One-Time)</a>
+        <button class="btn" id="closeModalBtn" type="button">Keep Using Free CSV</button>
       </div>
     </div>
   </div>
@@ -82,10 +144,9 @@
       const raw = document.getElementById('inBox').value.trim();
       if (/<tr[\s>]/i.test(raw)) {
         const doc = new DOMParser().parseFromString(raw, 'text/html');
-        const rows = Array.from(doc.querySelectorAll('tr')).map(tr =>
+        return Array.from(doc.querySelectorAll('tr')).map(tr =>
           Array.from(tr.children).filter(c => c.tagName==='TD'||c.tagName==='TH').map(c => c.textContent.replace(/\s+/g,' ').trim())
         ).filter(r => r.length > 0);
-        return rows;
       }
       return raw.split(/\r?\n/).filter(Boolean).map(line => line.split('\t').map(c => c.trim()));
     }
@@ -96,19 +157,14 @@
     function buildMd(rows) {
       if (!rows.length) return '';
       const esc = v => String(v||'').replace(/\|/g,'\\|');
-      const head = '| ' + rows[0].map(esc).join(' | ') + ' |';
-      const sep = '| ' + rows[0].map(() => '---').join(' | ') + ' |';
-      const body = rows.slice(1).map(r => '| ' + r.map(esc).join(' | ') + ' |');
-      return [head, sep, ...body].join('\n');
+      return ['| '+rows[0].map(esc).join(' | ')+' |', '| '+rows[0].map(()=>'---').join(' | ')+' |', ...rows.slice(1).map(r=>'| '+r.map(esc).join(' | ')+' |')].join('\n');
     }
     document.getElementById('toMdBtn').addEventListener('click', () => {
-      const rows = parseInput();
-      document.getElementById('outBox').value = buildMd(rows);
+      const rows = parseInput(); document.getElementById('outBox').value = buildMd(rows);
       document.getElementById('statusMsg').textContent = `Converted ${rows.length} rows to Markdown.`;
     });
     document.getElementById('toCsvBtn').addEventListener('click', () => {
-      const rows = parseInput();
-      document.getElementById('outBox').value = buildCsv(rows).replace(/^\uFEFF/,'');
+      const rows = parseInput(); document.getElementById('outBox').value = buildCsv(rows).replace(/^\uFEFF/,'');
       document.getElementById('statusMsg').textContent = `Converted ${rows.length} rows to CSV.`;
     });
     document.getElementById('copyBtn').addEventListener('click', async () => {
@@ -116,11 +172,19 @@
       document.getElementById('statusMsg').textContent = 'Copied to clipboard!';
     });
     document.getElementById('dlCsvBtn').addEventListener('click', () => {
-      const rows = parseInput();
-      const a = document.createElement('a');
+      const rows = parseInput(); const a = document.createElement('a');
       a.href = URL.createObjectURL(new Blob([buildCsv(rows)], { type:'text/csv;charset=utf-8' }));
       a.download = 'tablesnap-export.csv'; a.click();
     });
+    const modal = document.getElementById('proModal');
+    document.querySelectorAll('[data-pro]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('modalTitle').textContent = '🔒 ' + btn.getAttribute('data-pro');
+        modal.classList.add('open');
+      });
+    });
+    document.getElementById('closeModalBtn').addEventListener('click', () => modal.classList.remove('open'));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
     document.getElementById('toMdBtn').click();
   </script>
 </body>
