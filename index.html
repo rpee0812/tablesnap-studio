@@ -23,7 +23,7 @@
     body {
       background: radial-gradient(circle at 20% 0%, #1e1b4b 0%, var(--bg) 45%);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Noto Sans TC", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Meiryo", sans-serif;
       line-height: 1.6;
     }
     .wrap { max-width: 1120px; margin: 0 auto; padding: 0 22px; }
@@ -33,9 +33,26 @@
     }
     .brand { font-weight: 800; font-size: 18px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
     .brand-dot { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg, #6366f1, #22d3ee); display: inline-flex; align-items: center; justify-content: center; color: #0b1120; font-weight: 900; font-size: 13px; }
-    .nav-links { display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; }
+    .nav-right { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 18px; font-size: 14px; align-items: center; }
     .nav-links a { color: var(--muted); text-decoration: none; font-weight: 600; }
     .nav-links a:hover { color: #fff; }
+    .lang-switch {
+      display: inline-flex; align-items: center; gap: 2px;
+      padding: 3px; border-radius: 999px;
+      background: rgba(19,28,49,0.92); border: 1px solid var(--border);
+    }
+    .lang-btn {
+      appearance: none; border: none; background: transparent; color: var(--muted);
+      font-family: inherit; font-size: 12px; font-weight: 700; line-height: 1;
+      padding: 6px 10px; border-radius: 999px; cursor: pointer;
+      transition: background 0.14s, color 0.14s;
+    }
+    .lang-btn:hover { color: #fff; }
+    .lang-btn.active {
+      background: var(--primary); color: #fff;
+      box-shadow: 0 1px 6px rgba(99,102,241,0.45);
+    }
     .hero { text-align: center; padding: 64px 0 42px; }
     .pill {
       display: inline-block; padding: 6px 14px; border-radius: 999px;
@@ -113,49 +130,56 @@
   <div class="wrap">
     <nav>
       <div class="brand"><span class="brand-dot">HD</span> HoshiDesk Studio</div>
-      <div class="nav-links">
-        <a href="#products">Products</a>
-        <a href="#services">Custom Services</a>
-        <a href="obs-chat-css.html">Free Chat CSS</a>
-        <a href="vtuber-schedule.html">Free Schedule Maker</a>
-        <a href="obs-singing-setlist.html">Free Setlist Tool</a>
-        <a href="srt-tool.html">Free SRT Tool</a>
-        <a href="table-tool.html">Free Table Tool</a>
-        <a href="#faq">FAQ</a>
-        <a href="mailto:rpee0812@gmail.com">Support</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#products" data-i18n="nav_products">Products</a>
+          <a href="#services" data-i18n="nav_services">Custom Services</a>
+          <a href="obs-chat-css.html" data-i18n="nav_free_chat">Free Chat CSS</a>
+          <a href="vtuber-schedule.html" data-i18n="nav_free_schedule">Free Schedule Maker</a>
+          <a href="obs-singing-setlist.html" data-i18n="nav_free_setlist">Free Setlist Tool</a>
+          <a href="srt-tool.html" data-i18n="nav_free_srt">Free SRT Tool</a>
+          <a href="table-tool.html" data-i18n="nav_free_table">Free Table Tool</a>
+          <a href="#faq" data-i18n="nav_faq">FAQ</a>
+          <a href="mailto:rpee0812@gmail.com" data-i18n="nav_support">Support</a>
+        </div>
+        <div class="lang-switch" role="group" aria-label="Language selector">
+          <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" class="lang-btn" data-lang="zh-TW" aria-pressed="false">繁中</button>
+          <button type="button" class="lang-btn" data-lang="ja" aria-pressed="false">日本語</button>
+        </div>
       </div>
     </nav>
 
     <section class="hero">
-      <div class="pill">100% LOCAL · ZERO SUBSCRIPTIONS · MAJOR v2.0 / v3.0 RELEASE</div>
-      <h1>One-Time Tools That Save Hours Every Week</h1>
-      <p>No bloated SaaS subscriptions. No uploading your private files to unknown clouds. Buy once, run locally forever.</p>
+      <div class="pill" data-i18n="hero_pill">100% LOCAL · ZERO SUBSCRIPTIONS · MAJOR v2.0 / v3.0 RELEASE</div>
+      <h1 data-i18n="hero_h1">One-Time Tools That Save Hours Every Week</h1>
+      <p data-i18n="hero_sub">No bloated SaaS subscriptions. No uploading your private files to unknown clouds. Buy once, run locally forever.</p>
     </section>
 
     <section id="products" class="grid">
       <!-- Featured Bundle: VTuber 3-in-1 Complete Bundle -->
       <article class="card" style="border-color:rgba(244,63,94,0.6);background:linear-gradient(160deg,rgba(244,63,94,0.12),var(--panel) 55%);">
         <div>
-          <div class="tag" style="color:#fda4af;">★ BEST VALUE · SAVE 22% / ¥1,520 OFF</div>
+          <div class="tag" style="color:#fda4af;" data-i18n="bundle_tag">★ BEST VALUE · SAVE 22% / ¥1,520 OFF</div>
           <div class="title-row">
-            <h2>VTuber 3-in-1 Complete Bundle</h2>
-            <span class="ver">BUNDLE</span>
+            <h2 data-i18n="bundle_title">VTuber 3-in-1 Complete Bundle</h2>
+            <span class="ver" data-i18n="bundle_ver">BUNDLE</span>
           </div>
-          <p>Get ALL 3 offline OBS broadcast studios in one pack: HaishinDeck v3.0 + OverlayFrame v1.0 + ChatTheme v1.0 ($37 / ¥5,500 value).</p>
+          <p data-i18n="bundle_desc">Get ALL 3 offline OBS broadcast studios in one pack: HaishinDeck v3.0 + OverlayFrame v1.0 + ChatTheme v1.0 ($37 / ¥5,500 value).</p>
           <ul class="list">
-            <li>✓ <strong>HaishinDeck Studio v3.0</strong> (6 widgets + OBS Live Control Deck + Schedule PNG)</li>
-            <li>✓ <strong>OverlayFrame Studio v1.0</strong> (4 full 1920×1080 scenes, transparent PNG + HTML)</li>
-            <li>✓ <strong>ChatTheme Studio v1.0</strong> (6 YouTube/Twitch OBS Chat CSS themes + simulator)</li>
-            <li>✓ Trilingual Master Launcher (JP / ZH / EN) + commercial streaming license</li>
+            <li data-i18n-html="bundle_b1">✓ <strong>HaishinDeck Studio v3.0</strong> (6 widgets + OBS Live Control Deck + Schedule PNG)</li>
+            <li data-i18n-html="bundle_b2">✓ <strong>OverlayFrame Studio v1.0</strong> (4 full 1920×1080 scenes, transparent PNG + HTML)</li>
+            <li data-i18n-html="bundle_b3">✓ <strong>ChatTheme Studio v1.0</strong> (6 YouTube/Twitch OBS Chat CSS themes + simulator)</li>
+            <li data-i18n="bundle_b4">✓ Trilingual Master Launcher (JP / ZH / EN) + commercial streaming license</li>
           </ul>
         </div>
         <div>
-          <div class="price-row"><div class="price">$29 <span>one-time (¥3,980 BOOTH)</span></div></div>
+          <div class="price-row"><div class="price" data-i18n-html="bundle_price">$29 <span>one-time (¥3,980 BOOTH)</span></div></div>
           <div class="btns">
-            <a class="btn btn-primary" href="https://rpee0812.itch.io/vtuber-broadcast-complete-3-in-1-bundle-obs-widgets-4-scene-frames-chat-css" target="_blank" rel="noopener">Get 3-in-1 Bundle on itch.io ($29)</a>
+            <a class="btn btn-primary" href="https://rpee0812.itch.io/vtuber-broadcast-complete-3-in-1-bundle-obs-widgets-4-scene-frames-chat-css" target="_blank" rel="noopener" data-i18n="bundle_btn_itch">Get 3-in-1 Bundle on itch.io ($29)</a>
             <div class="btn-row">
-              <a class="btn btn-secondary" href="https://payhip.com/b/H0oGQ" target="_blank" rel="noopener">Payhip ($29)</a>
-              <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9229507" target="_blank" rel="noopener">BOOTH JP (¥3,980)</a>
+              <a class="btn btn-secondary" href="https://payhip.com/b/H0oGQ" target="_blank" rel="noopener" data-i18n="bundle_btn_payhip">Payhip ($29)</a>
+              <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9229507" target="_blank" rel="noopener" data-i18n="bundle_btn_booth">BOOTH JP (¥3,980)</a>
             </div>
           </div>
         </div>
@@ -164,27 +188,27 @@
       <!-- Product 1: HaishinDeck Studio v3.0 -->
       <article class="card">
         <div>
-          <div class="tag">For Streamers &amp; VTubers</div>
+          <div class="tag" data-i18n="hd_tag">For Streamers &amp; VTubers</div>
           <div class="title-row">
             <h2>HaishinDeck Studio</h2>
-            <span class="ver">v3.0 NEW</span>
+            <span class="ver" data-i18n="hd_ver">v3.0 NEW</span>
           </div>
-          <p>Zero-lag offline OBS Studio animated widget pack with a built-in Visual Customizer and the new OBS Live Control Deck.</p>
+          <p data-i18n="hd_desc">Zero-lag offline OBS Studio animated widget pack with a built-in Visual Customizer and the new OBS Live Control Deck.</p>
           <ul class="list">
-            <li>✓ <strong>OBS Live Control Deck</strong>: Update goals, timers &amp; ticker live mid-stream</li>
-            <li>✓ <strong>6 Widgets</strong>: Goal Bar, Countdown, Social Rotator, Pomodoro, <strong>Weekly Schedule (1920×1080 PNG)</strong> &amp; <strong>Live Ticker</strong></li>
-            <li>✓ <strong>4 Illustrated Themes</strong>: Sakura Neko, Mecha Crimson, Arcane &amp; Pixel</li>
-            <li>✓ 1-Click standalone .HTML export + commercial streaming license</li>
+            <li data-i18n-html="hd_b1">✓ <strong>OBS Live Control Deck</strong>: Update goals, timers &amp; ticker live mid-stream</li>
+            <li data-i18n-html="hd_b2">✓ <strong>6 Widgets</strong>: Goal Bar, Countdown, Social Rotator, Pomodoro, <strong>Weekly Schedule (1920×1080 PNG)</strong> &amp; <strong>Live Ticker</strong></li>
+            <li data-i18n-html="hd_b3">✓ <strong>4 Illustrated Themes</strong>: Sakura Neko, Mecha Crimson, Arcane &amp; Pixel</li>
+            <li data-i18n="hd_b4">✓ 1-Click standalone .HTML export + commercial streaming license</li>
           </ul>
         </div>
         <div>
-          <div class="price-row"><div class="price">$15 <span>one-time (or ¥0 Starter)</span></div></div>
+          <div class="price-row"><div class="price" data-i18n-html="hd_price">$15 <span>one-time (or ¥0 Starter)</span></div></div>
           <div class="btns">
-            <a class="btn btn-primary" href="https://rpee0812.itch.io/streamkit-studio-obs-animated-widget-pack-customizer" target="_blank" rel="noopener">Get v3.0 on itch.io ($15)</a>
-            <a class="btn btn-secondary" href="https://payhip.com/b/vdADZ" target="_blank" rel="noopener">Buy Direct on Payhip ($15)</a>
+            <a class="btn btn-primary" href="https://rpee0812.itch.io/streamkit-studio-obs-animated-widget-pack-customizer" target="_blank" rel="noopener" data-i18n="hd_btn_itch">Get v3.0 on itch.io ($15)</a>
+            <a class="btn btn-secondary" href="https://payhip.com/b/vdADZ" target="_blank" rel="noopener" data-i18n="hd_btn_payhip">Buy Direct on Payhip ($15)</a>
             <div class="btn-row">
-              <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9227435" target="_blank" rel="noopener">BOOTH JP Store</a>
-              <a class="btn btn-free" href="https://rpee0812.booth.pm/items/9227852" target="_blank" rel="noopener">BOOTH ¥0 Free Starter</a>
+              <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9227435" target="_blank" rel="noopener" data-i18n="hd_btn_booth">BOOTH JP Store</a>
+              <a class="btn btn-free" href="https://rpee0812.booth.pm/items/9227852" target="_blank" rel="noopener" data-i18n="hd_btn_free">BOOTH ¥0 Free Starter</a>
             </div>
           </div>
         </div>
@@ -193,26 +217,26 @@
       <!-- Product 2: OverlayFrame Studio v1.0 -->
       <article class="card">
         <div>
-          <div class="tag">For VTubers &amp; Broadcast Scenes</div>
+          <div class="tag" data-i18n="of_tag">For VTubers &amp; Broadcast Scenes</div>
           <div class="title-row">
             <h2>OverlayFrame Studio</h2>
-            <span class="ver">v1.0 NEW</span>
+            <span class="ver" data-i18n="of_ver">v1.0 NEW</span>
           </div>
-          <p>No Photoshop needed. Generate complete 1920×1080 4-scene OBS broadcast frames with true-transparency PNG &amp; animated HTML export.</p>
+          <p data-i18n="of_desc">No Photoshop needed. Generate complete 1920×1080 4-scene OBS broadcast frames with true-transparency PNG &amp; animated HTML export.</p>
           <ul class="list">
-            <li>✓ <strong>4 Complete Scenes</strong>: Starting Soon, Just Chatting, Gaming 16:9 Cutout &amp; Stream Ending</li>
-            <li>✓ <strong>4 Illustrated Themes</strong>: Sakura Neko, Mecha Crimson, Starlight Grimoire &amp; Retro Arcade</li>
-            <li>✓ <strong>Dual 1-Click Export</strong>: Animated OBS <code>.html</code> + Transparent Cutout <code>1920×1080 .png</code></li>
-            <li>✓ Trilingual UI (JP / ZH / EN) + commercial streaming license</li>
+            <li data-i18n-html="of_b1">✓ <strong>4 Complete Scenes</strong>: Starting Soon, Just Chatting, Gaming 16:9 Cutout &amp; Stream Ending</li>
+            <li data-i18n-html="of_b2">✓ <strong>4 Illustrated Themes</strong>: Sakura Neko, Mecha Crimson, Starlight Grimoire &amp; Retro Arcade</li>
+            <li data-i18n-html="of_b3">✓ <strong>Dual 1-Click Export</strong>: Animated OBS <code>.html</code> + Transparent Cutout <code>1920×1080 .png</code></li>
+            <li data-i18n="of_b4">✓ Trilingual UI (JP / ZH / EN) + commercial streaming license</li>
           </ul>
         </div>
         <div>
-          <div class="price-row"><div class="price">$12 <span>one-time (¥1,800 BOOTH)</span></div></div>
+          <div class="price-row"><div class="price" data-i18n-html="of_price">$12 <span>one-time (¥1,800 BOOTH)</span></div></div>
           <div class="btns">
-            <a class="btn btn-primary" href="https://rpee0812.itch.io/overlayframe-studio-1920x1080-4-scene-obs-overlay-generator-png-html" target="_blank" rel="noopener">Get on itch.io ($12)</a>
+            <a class="btn btn-primary" href="https://rpee0812.itch.io/overlayframe-studio-1920x1080-4-scene-obs-overlay-generator-png-html" target="_blank" rel="noopener" data-i18n="of_btn_itch">Get on itch.io ($12)</a>
             <div class="btn-row">
-              <a class="btn btn-secondary" href="https://payhip.com/b/oQrd2" target="_blank" rel="noopener">Payhip ($12)</a>
-              <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9228805" target="_blank" rel="noopener">BOOTH JP (¥1,800)</a>
+              <a class="btn btn-secondary" href="https://payhip.com/b/oQrd2" target="_blank" rel="noopener" data-i18n="of_btn_payhip">Payhip ($12)</a>
+              <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9228805" target="_blank" rel="noopener" data-i18n="of_btn_booth">BOOTH JP (¥1,800)</a>
             </div>
           </div>
         </div>
@@ -221,26 +245,26 @@
       <!-- Product 3: ChatTheme Studio v1.0 -->
       <article class="card">
         <div>
-          <div class="tag">For YouTube &amp; Twitch Live Chat</div>
+          <div class="tag" data-i18n="ct_tag">For YouTube &amp; Twitch Live Chat</div>
           <div class="title-row">
             <h2>ChatTheme Studio</h2>
-            <span class="ver">v1.0 NEW</span>
+            <span class="ver" data-i18n="ct_ver">v1.0 NEW</span>
           </div>
-          <p>Visual OBS Custom Chat CSS studio with a live multi-role chat simulator (Viewer, Member, Mod, Owner &amp; Super Chat) and 1-click copy.</p>
+          <p data-i18n="ct_desc">Visual OBS Custom Chat CSS studio with a live multi-role chat simulator (Viewer, Member, Mod, Owner &amp; Super Chat) and 1-click copy.</p>
           <ul class="list">
-            <li>✓ <strong>6 Designer Chat Themes</strong>: Sakura Ribbon, Cyber HUD, Frosted Glass, Retro RPG, Cafe Paper &amp; Neon Manga</li>
-            <li>✓ <strong>YouTube Live + Twitch / StreamElements</strong> real DOM selectors built in</li>
-            <li>✓ <strong>6 Ready-to-Paste .CSS Presets</strong> included for 10-second OBS setup</li>
-            <li>✓ 100% offline visual sliders (opacity, radius, animations, 30s auto-fade)</li>
+            <li data-i18n-html="ct_b1">✓ <strong>6 Designer Chat Themes</strong>: Sakura Ribbon, Cyber HUD, Frosted Glass, Retro RPG, Cafe Paper &amp; Neon Manga</li>
+            <li data-i18n-html="ct_b2">✓ <strong>YouTube Live + Twitch / StreamElements</strong> real DOM selectors built in</li>
+            <li data-i18n-html="ct_b3">✓ <strong>6 Ready-to-Paste .CSS Presets</strong> included for 10-second OBS setup</li>
+            <li data-i18n="ct_b4">✓ 100% offline visual sliders (opacity, radius, animations, 30s auto-fade)</li>
           </ul>
         </div>
         <div>
-          <div class="price-row"><div class="price">$10 <span>one-time (¥1,500 BOOTH)</span></div></div>
+          <div class="price-row"><div class="price" data-i18n-html="ct_price">$10 <span>one-time (¥1,500 BOOTH)</span></div></div>
           <div class="btns">
-            <a class="btn btn-primary" href="https://rpee0812.itch.io/chattheme-studio-youtube-twitch-obs-live-chat-css-generator-6-themes" target="_blank" rel="noopener">Get on itch.io ($10)</a>
+            <a class="btn btn-primary" href="https://rpee0812.itch.io/chattheme-studio-youtube-twitch-obs-live-chat-css-generator-6-themes" target="_blank" rel="noopener" data-i18n="ct_btn_itch">Get on itch.io ($10)</a>
             <div class="btn-row">
-              <a class="btn btn-secondary" href="https://payhip.com/b/aIuZw" target="_blank" rel="noopener">Payhip ($10)</a>
-              <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9228970" target="_blank" rel="noopener">BOOTH JP (¥1,500)</a>
+              <a class="btn btn-secondary" href="https://payhip.com/b/aIuZw" target="_blank" rel="noopener" data-i18n="ct_btn_payhip">Payhip ($10)</a>
+              <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9228970" target="_blank" rel="noopener" data-i18n="ct_btn_booth">BOOTH JP (¥1,500)</a>
             </div>
           </div>
         </div>
@@ -249,78 +273,78 @@
       <!-- Product 4: UtaRack Studio v1.0 -->
       <article class="card">
         <div>
-          <div class="tag">For VTuber Karaoke &amp; Singing Streams</div>
+          <div class="tag" data-i18n="ur_tag">For VTuber Karaoke &amp; Singing Streams</div>
           <div class="title-row">
             <h2>UtaRack Studio</h2>
-            <span class="ver">v1.0 NEW</span>
+            <span class="ver" data-i18n="ur_ver">v1.0 NEW</span>
           </div>
-          <p>Offline OBS singing-stream setlist overlay + Live OBS Custom Browser Dock + 1-click YouTube chapter timestamp generator.</p>
+          <p data-i18n="ur_desc">Offline OBS singing-stream setlist overlay + Live OBS Custom Browser Dock + 1-click YouTube chapter timestamp generator.</p>
           <ul class="list">
-            <li>✓ <strong>Live OBS Dock Controller</strong>: Switch "Now Singing" with equalizer bars &amp; auto-scroll mid-stream</li>
-            <li>✓ <strong>1-Click YouTube Timestamps</strong>: Auto-logs song times (<code>00:00 1. Song / Artist</code>) for descriptions</li>
-            <li>✓ <strong>4 Zero-CDN Themes × 2 Layouts</strong>: Sakura Stage, Cyber Live, Starlight Acoustic &amp; Retro Karaoke</li>
-            <li>✓ Includes Free Sakura Now-Singing Mini on BOOTH + commercial license</li>
+            <li data-i18n-html="ur_b1">✓ <strong>Live OBS Dock Controller</strong>: Switch "Now Singing" with equalizer bars &amp; auto-scroll mid-stream</li>
+            <li data-i18n-html="ur_b2">✓ <strong>1-Click YouTube Timestamps</strong>: Auto-logs song times (<code>00:00 1. Song / Artist</code>) for descriptions</li>
+            <li data-i18n-html="ur_b3">✓ <strong>4 Zero-CDN Themes × 2 Layouts</strong>: Sakura Stage, Cyber Live, Starlight Acoustic &amp; Retro Karaoke</li>
+            <li data-i18n="ur_b4">✓ Includes Free Sakura Now-Singing Mini on BOOTH + commercial license</li>
           </ul>
         </div>
         <div>
-          <div class="price-row"><div class="price">$12 <span>one-time (¥1,800 / ¥0 Mini)</span></div></div>
+          <div class="price-row"><div class="price" data-i18n-html="ur_price">$12 <span>one-time (¥1,800 / ¥0 Mini)</span></div></div>
           <div class="btns">
-            <a class="btn btn-primary" href="https://rpee0812.itch.io/utarack-studio-offline-obs-singing-stream-setlist-live-dock-youtube-timestamp" target="_blank" rel="noopener">Get on itch.io ($12)</a>
+            <a class="btn btn-primary" href="https://rpee0812.itch.io/utarack-studio-offline-obs-singing-stream-setlist-live-dock-youtube-timestamp" target="_blank" rel="noopener" data-i18n="ur_btn_itch">Get on itch.io ($12)</a>
             <div class="btn-row">
-              <a class="btn btn-secondary" href="https://payhip.com/b/WPuRO" target="_blank" rel="noopener">Payhip ($12)</a>
-              <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9229730" target="_blank" rel="noopener">BOOTH JP (¥1,800)</a>
+              <a class="btn btn-secondary" href="https://payhip.com/b/WPuRO" target="_blank" rel="noopener" data-i18n="ur_btn_payhip">Payhip ($12)</a>
+              <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9229730" target="_blank" rel="noopener" data-i18n="ur_btn_booth">BOOTH JP (¥1,800)</a>
             </div>
-            <a class="btn btn-free" href="https://rpee0812.booth.pm/items/9229733" target="_blank" rel="noopener">BOOTH ¥0 Free Singing Mini</a>
+            <a class="btn btn-free" href="https://rpee0812.booth.pm/items/9229733" target="_blank" rel="noopener" data-i18n="ur_btn_free">BOOTH ¥0 Free Singing Mini</a>
           </div>
         </div>
       </article>
 
-      <!-- Product 4: KirokuSub Pro v2.0 -->
+      <!-- Product 5: KirokuSub Pro v2.0 -->
       <article class="card">
         <div>
-          <div class="tag">For YouTubers &amp; Editors</div>
+          <div class="tag" data-i18n="ks_tag">For YouTubers &amp; Editors</div>
           <div class="title-row">
             <h2>KirokuSub Pro</h2>
-            <span class="ver">v2.0 NEW</span>
+            <span class="ver" data-i18n="ks_ver">v2.0 NEW</span>
           </div>
-          <p>Native Windows (.exe) &amp; macOS offline desktop subtitle studio for linting, splitting, syncing, and bilingual merging.</p>
+          <p data-i18n="ks_desc">Native Windows (.exe) &amp; macOS offline desktop subtitle studio for linting, splitting, syncing, and bilingual merging.</p>
           <ul class="list">
-            <li>✓ <strong>Netflix / YouTube CPS Quality Linter</strong> &amp; <strong>Smart Auto-Split</strong></li>
-            <li>✓ <strong>Styled Bilingual .ASS Export</strong> (auto-align 2 languages cleanly)</li>
-            <li>✓ <strong>Creator Glossary Batch Fixer</strong> &amp; side-by-side <strong>Visual Diff</strong></li>
-            <li>✓ Free core tools + 100% offline — transcripts never leave your PC</li>
+            <li data-i18n-html="ks_b1">✓ <strong>Netflix / YouTube CPS Quality Linter</strong> &amp; <strong>Smart Auto-Split</strong></li>
+            <li data-i18n-html="ks_b2">✓ <strong>Styled Bilingual .ASS Export</strong> (auto-align 2 languages cleanly)</li>
+            <li data-i18n-html="ks_b3">✓ <strong>Creator Glossary Batch Fixer</strong> &amp; side-by-side <strong>Visual Diff</strong></li>
+            <li data-i18n="ks_b4">✓ Free core tools + 100% offline — transcripts never leave your PC</li>
           </ul>
         </div>
         <div>
-          <div class="price-row"><div class="price">Free <span>/ $19 Pro</span></div></div>
+          <div class="price-row"><div class="price" data-i18n-html="ks_price">Free <span>/ $19 Pro</span></div></div>
           <div class="btns">
-            <a class="btn btn-primary" href="https://rpee0812.itch.io/subcraft-pro-offline-srt-vtt-subtitle-studio-win-mac" target="_blank" rel="noopener">Download v2.0 on itch.io (Win &amp; Mac)</a>
-            <a class="btn btn-secondary" href="https://payhip.com/b/IEKZn" target="_blank" rel="noopener">Unlock Lifetime Pro on Payhip ($19)</a>
+            <a class="btn btn-primary" href="https://rpee0812.itch.io/subcraft-pro-offline-srt-vtt-subtitle-studio-win-mac" target="_blank" rel="noopener" data-i18n="ks_btn_itch">Download v2.0 on itch.io (Win &amp; Mac)</a>
+            <a class="btn btn-secondary" href="https://payhip.com/b/IEKZn" target="_blank" rel="noopener" data-i18n="ks_btn_payhip">Unlock Lifetime Pro on Payhip ($19)</a>
           </div>
         </div>
       </article>
 
-      <!-- Product 5: RowSieve v2.0 -->
+      <!-- Product 6: RowSieve v2.0 -->
       <article class="card">
         <div>
-          <div class="tag">For Analysts, B2B &amp; E-Commerce</div>
+          <div class="tag" data-i18n="rs_tag">For Analysts, B2B &amp; E-Commerce</div>
           <div class="title-row">
             <h2>RowSieve</h2>
-            <span class="ver">v2.0 NEW</span>
+            <span class="ver" data-i18n="rs_ver">v2.0 NEW</span>
           </div>
-          <p>Auto-detect any HTML table or repeating product/lead list on any webpage and export cleanly to Excel (.xlsx) or CSV.</p>
+          <p data-i18n="rs_desc">Auto-detect any HTML table or repeating product/lead list on any webpage and export cleanly to Excel (.xlsx) or CSV.</p>
           <ul class="list">
-            <li>✓ <strong>B2B Lead-Gen &amp; E-Commerce Presets</strong>: Google Maps, Amazon/Shopee &amp; Job Boards</li>
-            <li>✓ <strong>Auto-Dedupe</strong> &amp; Multi-Page Merge for clean lead lists</li>
-            <li>✓ <strong>1-Click Excel (.XLSX) &amp; UTF-8 CSV Export</strong> with auto number cleaner</li>
-            <li>✓ 100% local in your browser — zero tracking, zero cloud servers</li>
+            <li data-i18n-html="rs_b1">✓ <strong>B2B Lead-Gen &amp; E-Commerce Presets</strong>: Google Maps, Amazon/Shopee &amp; Job Boards</li>
+            <li data-i18n-html="rs_b2">✓ <strong>Auto-Dedupe</strong> &amp; Multi-Page Merge for clean lead lists</li>
+            <li data-i18n-html="rs_b3">✓ <strong>1-Click Excel (.XLSX) &amp; UTF-8 CSV Export</strong> with auto number cleaner</li>
+            <li data-i18n="rs_b4">✓ 100% local in your browser — zero tracking, zero cloud servers</li>
           </ul>
         </div>
         <div>
-          <div class="price-row"><div class="price">Free <span>/ $9 Pro</span></div></div>
+          <div class="price-row"><div class="price" data-i18n-html="rs_price">Free <span>/ $9 Pro</span></div></div>
           <div class="btns">
-            <a class="btn btn-primary" href="https://payhip.com/b/lOCqt" target="_blank" rel="noopener">Get RowSieve v2.0 Pro ($9)</a>
-            <a class="btn btn-secondary" href="https://addons.mozilla.org/en-US/firefox/addon/tablesnap-%E7%B6%B2%E9%A0%81%E8%A1%A8%E6%A0%BC%E4%B8%80%E9%8D%B5%E5%8C%AF%E5%87%BA-excel-csv-m/" target="_blank" rel="noopener">Firefox Add-on Page</a>
+            <a class="btn btn-primary" href="https://payhip.com/b/lOCqt" target="_blank" rel="noopener" data-i18n="rs_btn_payhip">Get RowSieve v2.0 Pro ($9)</a>
+            <a class="btn btn-secondary" href="https://addons.mozilla.org/en-US/firefox/addon/tablesnap-%E7%B6%B2%E9%A0%81%E8%A1%A8%E6%A0%BC%E4%B8%80%E9%8D%B5%E5%8C%AF%E5%87%BA-excel-csv-m/" target="_blank" rel="noopener" data-i18n="rs_btn_firefox">Firefox Add-on Page</a>
           </div>
         </div>
       </article>
@@ -330,64 +354,474 @@
     <section id="services" class="services">
       <div class="services-head">
         <div>
-          <div class="tag">Done-For-You · Fast Turnaround</div>
-          <h2>Need a Custom OBS Setup or Automation Tool?</h2>
-          <p class="services-sub">Skip the DIY setup. We build custom offline VTuber OBS widgets and tailored local Python/AI workflow tools directly for creators, agencies, and small teams.</p>
+          <div class="tag" data-i18n="srv_tag">Done-For-You · Fast Turnaround</div>
+          <h2 data-i18n="srv_h2">Need a Custom OBS Setup or Automation Tool?</h2>
+          <p class="services-sub" data-i18n="srv_sub">Skip the DIY setup. We build custom offline VTuber OBS widgets and tailored local Python/AI workflow tools directly for creators, agencies, and small teams.</p>
         </div>
       </div>
 
       <div class="pkg-grid">
         <div class="pkg">
           <div class="pkg-top">
-            <h3>Custom VTuber OBS Widget</h3>
+            <h3 data-i18n="pkg1_title">Custom VTuber OBS Widget</h3>
             <span class="pkg-price">$35 – $65</span>
           </div>
-          <p>Bespoke animated Browser Source widget (goal bar, schedule card, ticker, alert or Live Control Deck theme) matched to your model &amp; brand colors.</p>
+          <p data-i18n="pkg1_desc">Bespoke animated Browser Source widget (goal bar, schedule card, ticker, alert or Live Control Deck theme) matched to your model &amp; brand colors.</p>
         </div>
         <div class="pkg">
           <div class="pkg-top">
-            <h3>Full Branded OBS Widget Suite</h3>
+            <h3 data-i18n="pkg2_title">Full Branded OBS Widget Suite</h3>
             <span class="pkg-price">$75 – $95</span>
           </div>
-          <p>Matched multi-widget OBS pack + 1920×1080 schedule generator + scene setup walkthrough ready for Twitch, YouTube, or Kick.</p>
+          <p data-i18n="pkg2_desc">Matched multi-widget OBS pack + 1920×1080 schedule generator + scene setup walkthrough ready for Twitch, YouTube, or Kick.</p>
         </div>
         <div class="pkg">
           <div class="pkg-top">
-            <h3>Local Python / AI Workflow Tool</h3>
+            <h3 data-i18n="pkg3_title">Local Python / AI Workflow Tool</h3>
             <span class="pkg-price">$80 – $120</span>
           </div>
-          <p>Custom offline script or desktop utility for subtitle pipelines, B2B lead/table scraping, batch file processing, or local AI automation.</p>
+          <p data-i18n="pkg3_desc">Custom offline script or desktop utility for subtitle pipelines, B2B lead/table scraping, batch file processing, or local AI automation.</p>
         </div>
       </div>
 
       <div class="services-foot">
-        <div class="services-note">Fixed-price quotes ($35–$120 / ¥8,000〜) · 100% local source delivered · Direct email &amp; BOOTH support</div>
+        <div class="services-note" data-i18n="srv_note">Fixed-price quotes ($35–$120 / ¥8,000〜) · 100% local source delivered · Direct email &amp; BOOTH support</div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9229658" target="_blank" rel="noopener" style="padding:11px 18px;font-size:13.5px;">BOOTH オーダーメイド (¥8,000〜)</a>
-          <a class="btn btn-primary" href="mailto:rpee0812@gmail.com?subject=Custom%20OBS%20%2F%20Automation%20Tool%20Request" style="padding:11px 22px;">Request a Custom Build — rpee0812@gmail.com</a>
+          <a class="btn btn-booth" href="https://rpee0812.booth.pm/items/9229658" target="_blank" rel="noopener" style="padding:11px 18px;font-size:13.5px;" data-i18n="srv_btn_booth">BOOTH オーダーメイド (¥8,000〜)</a>
+          <a class="btn btn-primary" href="mailto:rpee0812@gmail.com?subject=Custom%20OBS%20%2F%20Automation%20Tool%20Request" style="padding:11px 22px;" data-i18n="srv_btn_email">Request a Custom Build — rpee0812@gmail.com</a>
         </div>
       </div>
     </section>
 
     <section id="faq" class="faq">
-      <h3>Frequently Asked Questions &amp; Security</h3>
+      <h3 data-i18n="faq_h3">Frequently Asked Questions &amp; Security</h3>
       <div class="faq-item">
-        <strong>Why does Windows SmartScreen show a warning for KirokuSub Pro (Windows .exe)?</strong>
-        <p>As an independent studio keeping tools affordable ($9–$19 one-time), we don't pay $400+/year for an EV Code Signing certificate yet. Click <em>More info → Run anyway</em> on Windows, or run the open Python macOS/Linux package directly. Zero telemetry, 100% offline.</p>
+        <strong data-i18n="faq_q1">Why does Windows SmartScreen show a warning for KirokuSub Pro (Windows .exe)?</strong>
+        <p data-i18n-html="faq_a1">As an independent studio keeping tools affordable ($9–$19 one-time), we don't pay $400+/year for an EV Code Signing certificate yet. Click <em>More info → Run anyway</em> on Windows, or run the open Python macOS/Linux package directly. Zero telemetry, 100% offline.</p>
       </div>
       <div class="faq-item">
-        <strong>Are there any recurring subscriptions?</strong>
-        <p>Never. Every Pro license is a one-time payment with lifetime local access and free updates.</p>
+        <strong data-i18n="faq_q2">Are there any recurring subscriptions?</strong>
+        <p data-i18n="faq_a2">Never. Every Pro license is a one-time payment with lifetime local access and free updates.</p>
       </div>
       <div class="faq-item">
-        <strong>How do I get support or book a custom tool?</strong>
-        <p>Email us anytime at <a href="mailto:rpee0812@gmail.com" style="color:#a5b4fc">rpee0812@gmail.com</a> — we reply quickly.</p>
+        <strong data-i18n="faq_q3">How do I get support or book a custom tool?</strong>
+        <p data-i18n-html="faq_a3">Email us anytime at <a href="mailto:rpee0812@gmail.com" style="color:#a5b4fc">rpee0812@gmail.com</a> — we reply quickly.</p>
       </div>
     </section>
 
-    <footer>
+    <footer data-i18n-html="footer">
       © 2026 HoshiDesk Studio · Built with privacy first · Contact: <a href="mailto:rpee0812@gmail.com">rpee0812@gmail.com</a>
     </footer>
   </div>
+
+  <script>
+    (function () {
+      const I18N = {
+        en: {
+          _title: 'HoshiDesk Studio — Fast, Local-First Tools for Creators & Analysts',
+          nav_products: 'Products',
+          nav_services: 'Custom Services',
+          nav_free_chat: 'Free Chat CSS',
+          nav_free_schedule: 'Free Schedule Maker',
+          nav_free_setlist: 'Free Setlist Tool',
+          nav_free_srt: 'Free SRT Tool',
+          nav_free_table: 'Free Table Tool',
+          nav_faq: 'FAQ',
+          nav_support: 'Support',
+          hero_pill: '100% LOCAL · ZERO SUBSCRIPTIONS · MAJOR v2.0 / v3.0 RELEASE',
+          hero_h1: 'One-Time Tools That Save Hours Every Week',
+          hero_sub: 'No bloated SaaS subscriptions. No uploading your private files to unknown clouds. Buy once, run locally forever.',
+          bundle_tag: '★ BEST VALUE · SAVE 22% / ¥1,520 OFF',
+          bundle_title: 'VTuber 3-in-1 Complete Bundle',
+          bundle_ver: 'BUNDLE',
+          bundle_desc: 'Get ALL 3 offline OBS broadcast studios in one pack: HaishinDeck v3.0 + OverlayFrame v1.0 + ChatTheme v1.0 ($37 / ¥5,500 value).',
+          bundle_b1: '✓ <strong>HaishinDeck Studio v3.0</strong> (6 widgets + OBS Live Control Deck + Schedule PNG)',
+          bundle_b2: '✓ <strong>OverlayFrame Studio v1.0</strong> (4 full 1920×1080 scenes, transparent PNG + HTML)',
+          bundle_b3: '✓ <strong>ChatTheme Studio v1.0</strong> (6 YouTube/Twitch OBS Chat CSS themes + simulator)',
+          bundle_b4: '✓ Trilingual Master Launcher (JP / ZH / EN) + commercial streaming license',
+          bundle_price: '$29 <span>one-time (¥3,980 BOOTH)</span>',
+          bundle_btn_itch: 'Get 3-in-1 Bundle on itch.io ($29)',
+          bundle_btn_payhip: 'Payhip ($29)',
+          bundle_btn_booth: 'BOOTH JP (¥3,980)',
+          hd_tag: 'For Streamers & VTubers',
+          hd_ver: 'v3.0 NEW',
+          hd_desc: 'Zero-lag offline OBS Studio animated widget pack with a built-in Visual Customizer and the new OBS Live Control Deck.',
+          hd_b1: '✓ <strong>OBS Live Control Deck</strong>: Update goals, timers &amp; ticker live mid-stream',
+          hd_b2: '✓ <strong>6 Widgets</strong>: Goal Bar, Countdown, Social Rotator, Pomodoro, <strong>Weekly Schedule (1920×1080 PNG)</strong> &amp; <strong>Live Ticker</strong>',
+          hd_b3: '✓ <strong>4 Illustrated Themes</strong>: Sakura Neko, Mecha Crimson, Arcane &amp; Pixel',
+          hd_b4: '✓ 1-Click standalone .HTML export + commercial streaming license',
+          hd_price: '$15 <span>one-time (or ¥0 Starter)</span>',
+          hd_btn_itch: 'Get v3.0 on itch.io ($15)',
+          hd_btn_payhip: 'Buy Direct on Payhip ($15)',
+          hd_btn_booth: 'BOOTH JP Store',
+          hd_btn_free: 'BOOTH ¥0 Free Starter',
+          of_tag: 'For VTubers & Broadcast Scenes',
+          of_ver: 'v1.0 NEW',
+          of_desc: 'No Photoshop needed. Generate complete 1920×1080 4-scene OBS broadcast frames with true-transparency PNG & animated HTML export.',
+          of_b1: '✓ <strong>4 Complete Scenes</strong>: Starting Soon, Just Chatting, Gaming 16:9 Cutout &amp; Stream Ending',
+          of_b2: '✓ <strong>4 Illustrated Themes</strong>: Sakura Neko, Mecha Crimson, Starlight Grimoire &amp; Retro Arcade',
+          of_b3: '✓ <strong>Dual 1-Click Export</strong>: Animated OBS <code>.html</code> + Transparent Cutout <code>1920×1080 .png</code>',
+          of_b4: '✓ Trilingual UI (JP / ZH / EN) + commercial streaming license',
+          of_price: '$12 <span>one-time (¥1,800 BOOTH)</span>',
+          of_btn_itch: 'Get on itch.io ($12)',
+          of_btn_payhip: 'Payhip ($12)',
+          of_btn_booth: 'BOOTH JP (¥1,800)',
+          ct_tag: 'For YouTube & Twitch Live Chat',
+          ct_ver: 'v1.0 NEW',
+          ct_desc: 'Visual OBS Custom Chat CSS studio with a live multi-role chat simulator (Viewer, Member, Mod, Owner & Super Chat) and 1-click copy.',
+          ct_b1: '✓ <strong>6 Designer Chat Themes</strong>: Sakura Ribbon, Cyber HUD, Frosted Glass, Retro RPG, Cafe Paper &amp; Neon Manga',
+          ct_b2: '✓ <strong>YouTube Live + Twitch / StreamElements</strong> real DOM selectors built in',
+          ct_b3: '✓ <strong>6 Ready-to-Paste .CSS Presets</strong> included for 10-second OBS setup',
+          ct_b4: '✓ 100% offline visual sliders (opacity, radius, animations, 30s auto-fade)',
+          ct_price: '$10 <span>one-time (¥1,500 BOOTH)</span>',
+          ct_btn_itch: 'Get on itch.io ($10)',
+          ct_btn_payhip: 'Payhip ($10)',
+          ct_btn_booth: 'BOOTH JP (¥1,500)',
+          ur_tag: 'For VTuber Karaoke & Singing Streams',
+          ur_ver: 'v1.0 NEW',
+          ur_desc: 'Offline OBS singing-stream setlist overlay + Live OBS Custom Browser Dock + 1-click YouTube chapter timestamp generator.',
+          ur_b1: '✓ <strong>Live OBS Dock Controller</strong>: Switch "Now Singing" with equalizer bars &amp; auto-scroll mid-stream',
+          ur_b2: '✓ <strong>1-Click YouTube Timestamps</strong>: Auto-logs song times (<code>00:00 1. Song / Artist</code>) for descriptions',
+          ur_b3: '✓ <strong>4 Zero-CDN Themes × 2 Layouts</strong>: Sakura Stage, Cyber Live, Starlight Acoustic &amp; Retro Karaoke',
+          ur_b4: '✓ Includes Free Sakura Now-Singing Mini on BOOTH + commercial license',
+          ur_price: '$12 <span>one-time (¥1,800 / ¥0 Mini)</span>',
+          ur_btn_itch: 'Get on itch.io ($12)',
+          ur_btn_payhip: 'Payhip ($12)',
+          ur_btn_booth: 'BOOTH JP (¥1,800)',
+          ur_btn_free: 'BOOTH ¥0 Free Singing Mini',
+          ks_tag: 'For YouTubers & Editors',
+          ks_ver: 'v2.0 NEW',
+          ks_desc: 'Native Windows (.exe) & macOS offline desktop subtitle studio for linting, splitting, syncing, and bilingual merging.',
+          ks_b1: '✓ <strong>Netflix / YouTube CPS Quality Linter</strong> &amp; <strong>Smart Auto-Split</strong>',
+          ks_b2: '✓ <strong>Styled Bilingual .ASS Export</strong> (auto-align 2 languages cleanly)',
+          ks_b3: '✓ <strong>Creator Glossary Batch Fixer</strong> &amp; side-by-side <strong>Visual Diff</strong>',
+          ks_b4: '✓ Free core tools + 100% offline — transcripts never leave your PC',
+          ks_price: 'Free <span>/ $19 Pro</span>',
+          ks_btn_itch: 'Download v2.0 on itch.io (Win & Mac)',
+          ks_btn_payhip: 'Unlock Lifetime Pro on Payhip ($19)',
+          rs_tag: 'For Analysts, B2B & E-Commerce',
+          rs_ver: 'v2.0 NEW',
+          rs_desc: 'Auto-detect any HTML table or repeating product/lead list on any webpage and export cleanly to Excel (.xlsx) or CSV.',
+          rs_b1: '✓ <strong>B2B Lead-Gen &amp; E-Commerce Presets</strong>: Google Maps, Amazon/Shopee &amp; Job Boards',
+          rs_b2: '✓ <strong>Auto-Dedupe</strong> &amp; Multi-Page Merge for clean lead lists',
+          rs_b3: '✓ <strong>1-Click Excel (.XLSX) &amp; UTF-8 CSV Export</strong> with auto number cleaner',
+          rs_b4: '✓ 100% local in your browser — zero tracking, zero cloud servers',
+          rs_price: 'Free <span>/ $9 Pro</span>',
+          rs_btn_payhip: 'Get RowSieve v2.0 Pro ($9)',
+          rs_btn_firefox: 'Firefox Add-on Page',
+          srv_tag: 'Done-For-You · Fast Turnaround',
+          srv_h2: 'Need a Custom OBS Setup or Automation Tool?',
+          srv_sub: 'Skip the DIY setup. We build custom offline VTuber OBS widgets and tailored local Python/AI workflow tools directly for creators, agencies, and small teams.',
+          pkg1_title: 'Custom VTuber OBS Widget',
+          pkg1_desc: 'Bespoke animated Browser Source widget (goal bar, schedule card, ticker, alert or Live Control Deck theme) matched to your model & brand colors.',
+          pkg2_title: 'Full Branded OBS Widget Suite',
+          pkg2_desc: 'Matched multi-widget OBS pack + 1920×1080 schedule generator + scene setup walkthrough ready for Twitch, YouTube, or Kick.',
+          pkg3_title: 'Local Python / AI Workflow Tool',
+          pkg3_desc: 'Custom offline script or desktop utility for subtitle pipelines, B2B lead/table scraping, batch file processing, or local AI automation.',
+          srv_note: 'Fixed-price quotes ($35–$120 / ¥8,000〜) · 100% local source delivered · Direct email & BOOTH support',
+          srv_btn_booth: 'BOOTH Custom Order (¥8,000〜)',
+          srv_btn_email: 'Request a Custom Build — rpee0812@gmail.com',
+          faq_h3: 'Frequently Asked Questions & Security',
+          faq_q1: 'Why does Windows SmartScreen show a warning for KirokuSub Pro (Windows .exe)?',
+          faq_a1: 'As an independent studio keeping tools affordable ($9–$19 one-time), we don\'t pay $400+/year for an EV Code Signing certificate yet. Click <em>More info → Run anyway</em> on Windows, or run the open Python macOS/Linux package directly. Zero telemetry, 100% offline.',
+          faq_q2: 'Are there any recurring subscriptions?',
+          faq_a2: 'Never. Every Pro license is a one-time payment with lifetime local access and free updates.',
+          faq_q3: 'How do I get support or book a custom tool?',
+          faq_a3: 'Email us anytime at <a href="mailto:rpee0812@gmail.com" style="color:#a5b4fc">rpee0812@gmail.com</a> — we reply quickly.',
+          footer: '© 2026 HoshiDesk Studio · Built with privacy first · Contact: <a href="mailto:rpee0812@gmail.com">rpee0812@gmail.com</a>'
+        },
+        'zh-TW': {
+          _title: 'HoshiDesk Studio — 專為創作者與分析師打造的本機離線高效工具',
+          nav_products: '產品一覽',
+          nav_services: '客製開發',
+          nav_free_chat: '免費聊天室 CSS',
+          nav_free_schedule: '免費週表工具',
+          nav_free_setlist: '免費歌回歌單',
+          nav_free_srt: '免費 SRT 字幕',
+          nav_free_table: '免費表格工具',
+          nav_faq: '常見問題',
+          nav_support: '聯絡支援',
+          hero_pill: '100% 本機離線 · 免月費訂閱 · v2.0 / v3.0 重大更新',
+          hero_h1: '一次買斷，每週為你省下數小時的專業工具',
+          hero_sub: '拒絕肥大的 SaaS 月費訂閱，也無需將私人檔案上傳至未知雲端。一次購買，永遠在你的電腦本機離線運行。',
+          bundle_tag: '★ 超值首選 · 現省 22% / 現折 ¥1,520',
+          bundle_title: 'VTuber 直播三合一完整大全套',
+          bundle_ver: '大全套',
+          bundle_desc: '一次收齊 3 套離線 OBS 直播工作室：HaishinDeck v3.0 + OverlayFrame v1.0 + ChatTheme v1.0（原價 $37 / ¥5,500）。',
+          bundle_b1: '✓ <strong>HaishinDeck Studio v3.0</strong>（6 款動態小工具 + OBS 即時控台 + 週表 PNG）',
+          bundle_b2: '✓ <strong>OverlayFrame Studio v1.0</strong>（4 套 1920×1080 直播場景框，透明 PNG + HTML）',
+          bundle_b3: '✓ <strong>ChatTheme Studio v1.0</strong>（6 款 YouTube/Twitch 聊天室 CSS 主題 + 模擬器）',
+          bundle_b4: '✓ 三語整合啟動器（日 / 繁中 / 英）+ 商業直播授權',
+          bundle_price: '$29 <span>一次買斷（BOOTH ¥3,980）</span>',
+          bundle_btn_itch: '前往 itch.io 入手三合一大全套 ($29)',
+          bundle_btn_payhip: 'Payhip 直購 ($29)',
+          bundle_btn_booth: 'BOOTH 日本商店 (¥3,980)',
+          hd_tag: '實況主 & VTuber 專用',
+          hd_ver: 'v3.0 全新升級',
+          hd_desc: '零延遲離線 OBS Studio 動態小工具包，內建視覺化自訂面板與全新 OBS 即時直播控台。',
+          hd_b1: '✓ <strong>OBS 即時直播控台</strong>：開台途中即時更新目標條、計時器與跑馬燈',
+          hd_b2: '✓ <strong>6 款直播小工具</strong>：目標條、倒數計時、社群輪播、番茄鐘、<strong>每週行程表（1920×1080 PNG）</strong>與<strong>即時跑馬燈</strong>',
+          hd_b3: '✓ <strong>4 套原創插畫主題</strong>：櫻花貓咪、緋紅機甲、星辰秘儀與復古像素',
+          hd_b4: '✓ 一鍵匯出獨立 .HTML 檔案 + 商業直播授權',
+          hd_price: '$15 <span>一次買斷（另提供 ¥0 體驗版）</span>',
+          hd_btn_itch: '前往 itch.io 取得 v3.0 ($15)',
+          hd_btn_payhip: '前往 Payhip 直接購買 ($15)',
+          hd_btn_booth: 'BOOTH 日本商店',
+          hd_btn_free: 'BOOTH ¥0 免費體驗版',
+          of_tag: 'VTuber & 直播場景覆蓋層',
+          of_ver: 'v1.0 新上架',
+          of_desc: '免用 Photoshop！一鍵產生完整 1920×1080 四大直播場景框，支援真透明挖空 PNG 與動態 HTML 匯出。',
+          of_b1: '✓ <strong>4 套完整直播場景</strong>：待機畫面、雜談畫面、遊戲 16:9 挖空框與下播畫面',
+          of_b2: '✓ <strong>4 套原創插畫風格</strong>：櫻花貓咪、緋紅機甲、星光魔導書與復古街機',
+          of_b3: '✓ <strong>雙格式一鍵匯出</strong>：動態 OBS <code>.html</code> + 真透明挖空 <code>1920×1080 .png</code>',
+          of_b4: '✓ 三語操作介面（日 / 繁中 / 英）+ 商業直播授權',
+          of_price: '$12 <span>一次買斷（BOOTH ¥1,800）</span>',
+          of_btn_itch: '前往 itch.io 取得 ($12)',
+          of_btn_payhip: 'Payhip ($12)',
+          of_btn_booth: 'BOOTH 日本商店 (¥1,800)',
+          ct_tag: 'YouTube & Twitch 聊天室美化',
+          ct_ver: 'v1.0 新上架',
+          ct_desc: '視覺化 OBS 自訂聊天室 CSS 產生器，內建多身分即時模擬器（觀眾、會員、管理員、台主與 Super Chat）與一鍵複製。',
+          ct_b1: '✓ <strong>6 款設計師聊天室主題</strong>：櫻花緞帶、賽博 HUD、毛玻璃、復古 RPG、咖啡廳手札與霓虹漫畫',
+          ct_b2: '✓ 內建 <strong>YouTube Live + Twitch / StreamElements</strong> 真實 DOM 選擇器',
+          ct_b3: '✓ 附贈 <strong>6 份即貼即用 .CSS 範本</strong>，10 秒完成 OBS 套用',
+          ct_b4: '✓ 100% 離線視覺化拉桿（透明度、圓角、動畫、30 秒自動淡出）',
+          ct_price: '$10 <span>一次買斷（BOOTH ¥1,500）</span>',
+          ct_btn_itch: '前往 itch.io 取得 ($10)',
+          ct_btn_payhip: 'Payhip ($10)',
+          ct_btn_booth: 'BOOTH 日本商店 (¥1,500)',
+          ur_tag: 'VTuber 歌回 & 歌唱直播專用',
+          ur_ver: 'v1.0 新上架',
+          ur_desc: '離線 OBS 歌回歌單覆蓋層 + OBS 自訂瀏覽器停駐控台 + 一鍵產生 YouTube 章節時間軸。',
+          ur_b1: '✓ <strong>OBS 即時停駐控台</strong>：直播中一鍵切換「演唱中」曲目，附動態音頻條與自動捲動',
+          ur_b2: '✓ <strong>一鍵產生 YouTube 時間軸</strong>：自動記錄每首歌時間（<code>00:00 1. 歌名 / 歌手</code>）直接貼進資訊欄',
+          ur_b3: '✓ <strong>4 套無外連主題 × 2 種版型</strong>：櫻花舞台、賽博現場、星光木吉他與復古卡拉 OK',
+          ur_b4: '✓ BOOTH 另提供免費櫻花演唱中迷你版 + 商業直播授權',
+          ur_price: '$12 <span>一次買斷（BOOTH ¥1,800 / ¥0 迷你版）</span>',
+          ur_btn_itch: '前往 itch.io 取得 ($12)',
+          ur_btn_payhip: 'Payhip ($12)',
+          ur_btn_booth: 'BOOTH 日本商店 (¥1,800)',
+          ur_btn_free: 'BOOTH ¥0 免費歌回迷你版',
+          ks_tag: 'YouTuber & 影片剪輯師專用',
+          ks_ver: 'v2.0 全新升級',
+          ks_desc: '原生 Windows (.exe) 與 macOS 離線桌面字幕工作室，專為字幕質檢、智慧斷行、時間軸同步與雙語合併而生。',
+          ks_b1: '✓ <strong>Netflix / YouTube CPS 語速質檢</strong>與<strong>智慧自動斷行</strong>',
+          ks_b2: '✓ <strong>雙語樣式 .ASS 匯出</strong>（自動精準對齊兩種語言字幕）',
+          ks_b3: '✓ <strong>創作者專有名詞批次修正</strong>與並排<strong>視覺化差異比對</strong>',
+          ks_b4: '✓ 核心功能免費 + 100% 離線處理，逐字稿絕不外流',
+          ks_price: '免費 <span>/ $19 Pro 買斷</span>',
+          ks_btn_itch: '前往 itch.io 下載 v2.0 (Win & Mac)',
+          ks_btn_payhip: '於 Payhip 解鎖終身 Pro ($19)',
+          rs_tag: '數據分析、B2B 開發與電商專用',
+          rs_ver: 'v2.0 全新升級',
+          rs_desc: '自動偵測任意網頁中的 HTML 表格或重複商品／名單卡片，一鍵乾淨匯出為 Excel (.xlsx) 或 CSV。',
+          rs_b1: '✓ <strong>B2B 名單開發與電商預設模式</strong>：支援 Google 地圖、Amazon／蝦皮與求職網站',
+          rs_b2: '✓ <strong>自動去重</strong>與跨頁資料合併，整理出乾淨名單',
+          rs_b3: '✓ <strong>一鍵匯出 Excel (.XLSX) 與 UTF-8 CSV</strong>，內建數字與金額清理',
+          rs_b4: '✓ 100% 於瀏覽器本機運算 — 零追蹤、不經任何雲端伺服器',
+          rs_price: '免費 <span>/ $9 Pro 買斷</span>',
+          rs_btn_payhip: '入手 RowSieve v2.0 Pro ($9)',
+          rs_btn_firefox: 'Firefox 附加元件商店',
+          srv_tag: '專人客製開發 · 快速交付',
+          srv_h2: '需要客製化 OBS 直播版面或自動化工具？',
+          srv_sub: '省去自己摸索的時間。我們直接為創作者、VTuber 團隊與小型企業量身打造專屬離線 OBS 小工具與本機 Python／AI 自動化流程。',
+          pkg1_title: '客製 VTuber OBS 動態小工具',
+          pkg1_desc: '依照你的角色立繪與品牌配色量身設計專屬瀏覽器來源小工具（目標條、週表、跑馬燈、通知或控台主題）。',
+          pkg2_title: '全套品牌化 OBS 直播視覺組',
+          pkg2_desc: '統一風格的多款 OBS 小工具組合 + 1920×1080 週表產生器 + Twitch／YouTube／Kick 場景設定教學。',
+          pkg3_title: '本機 Python / AI 自動化工具',
+          pkg3_desc: '客製化離線腳本或桌面小工具，涵蓋字幕批次處理、B2B 名單表格擷取、檔案自動化或本機 AI 工作流。',
+          srv_note: '透明固定報價（$35–$120 / ¥8,000〜）· 100% 本機原始碼交付 · Email 與 BOOTH 直接聯繫',
+          srv_btn_booth: 'BOOTH 客製委託 (¥8,000〜)',
+          srv_btn_email: '預約客製開發 — rpee0812@gmail.com',
+          faq_h3: '常見問題與安全性說明',
+          faq_q1: '為什麼 Windows SmartScreen 會在開啟 KirokuSub Pro（Windows .exe）時顯示警告？',
+          faq_a1: '為了維持獨立工作室平易近人的買斷價（$9–$19），我們目前未購買每年超過 $400 的 EV 程式碼簽章憑證。在 Windows 上點擊<em>其他資訊 → 仍要執行</em>即可安心使用，或直接執行開源 Python 的 macOS／Linux 版本。零遙測、100% 離線。',
+          faq_q2: '這些工具需要每月續訂付費嗎？',
+          faq_a2: '完全不需要。每一套 Pro 授權皆為一次性買斷，享有終身本機使用權與免費更新。',
+          faq_q3: '如何聯繫客服支援或洽談客製化工具？',
+          faq_a3: '歡迎隨時寄信至 <a href="mailto:rpee0812@gmail.com" style="color:#a5b4fc">rpee0812@gmail.com</a>，我們會盡快回覆你。',
+          footer: '© 2026 HoshiDesk Studio · 隱私優先設計 · 聯絡信箱：<a href="mailto:rpee0812@gmail.com">rpee0812@gmail.com</a>'
+        },
+        ja: {
+          _title: 'HoshiDesk Studio — クリエイター＆アナリスト向け高速ローカル完結ツール',
+          nav_products: '製品一覧',
+          nav_services: 'オーダーメイド',
+          nav_free_chat: '無料チャットCSS',
+          nav_free_schedule: '無料予定表ツール',
+          nav_free_setlist: '無料歌枠セトリ',
+          nav_free_srt: '無料SRT字幕',
+          nav_free_table: '無料テーブル抽出',
+          nav_faq: 'よくある質問',
+          nav_support: 'お問い合わせ',
+          hero_pill: '100% ローカル動作 · サブスク不要 · v2.0 / v3.0 大型アップデート',
+          hero_h1: '買い切りツールで、毎週の作業時間を大幅短縮',
+          hero_sub: '月額課金のSaaSはもう不要。大切なデータをクラウドへ送信せず、一度の購入でずっとローカル環境で使えます。',
+          bundle_tag: '★ 一番お得 · 22% OFF / ¥1,520 お得',
+          bundle_title: 'VTuber配信 3-in-1 コンプリートバンドル',
+          bundle_ver: 'セット割',
+          bundle_desc: 'オフラインOBS配信スタジオ3製品をまとめて収録：HaishinDeck v3.0 + OverlayFrame v1.0 + ChatTheme v1.0（通常 $37 / ¥5,500 相当）。',
+          bundle_b1: '✓ <strong>HaishinDeck Studio v3.0</strong>（6種ウィジェット + OBSライブ操作ドック + 週間予定表PNG）',
+          bundle_b2: '✓ <strong>OverlayFrame Studio v1.0</strong>（1920×1080 4シーン配信枠、透過PNG + アニメHTML）',
+          bundle_b3: '✓ <strong>ChatTheme Studio v1.0</strong>（YouTube/Twitch対応OBSチャットCSS 6テーマ + シミュレーター）',
+          bundle_b4: '✓ 日・中・英3言語ランチャー同梱 + 商用配信利用OK',
+          bundle_price: '$29 <span>買い切り（BOOTH ¥3,980）</span>',
+          bundle_btn_itch: 'itch.io で3-in-1セットを購入 ($29)',
+          bundle_btn_payhip: 'Payhip ($29)',
+          bundle_btn_booth: 'BOOTH 日本ストア (¥3,980)',
+          hd_tag: '配信者・VTuber向け',
+          hd_ver: 'v3.0 NEW',
+          hd_desc: '超軽量・オフライン完結のOBSアニメーションウィジェット集。ビジュアル編集機能と新搭載OBSライブ操作ドック付き。',
+          hd_b1: '✓ <strong>OBSライブ操作ドック</strong>：配信中に目標バー・タイマー・テロップをリアルタイム更新',
+          hd_b2: '✓ <strong>6種のウィジェット</strong>：目標バー、カウントダウン、SNSローテーター、ポモドーロ、<strong>週間予定表（1920×1080 PNG）</strong>、<strong>ライブテロップ</strong>',
+          hd_b3: '✓ <strong>4種の描き下ろしテーマ</strong>：桜ねこ、紅蓮メカ、星辰アーケイン、レトロピクセル',
+          hd_b4: '✓ ワンクリック独立 .HTML 書き出し + 商用配信ライセンス付き',
+          hd_price: '$15 <span>買い切り（¥0 無料スターターあり）</span>',
+          hd_btn_itch: 'itch.io で v3.0 を購入 ($15)',
+          hd_btn_payhip: 'Payhip で直接購入 ($15)',
+          hd_btn_booth: 'BOOTH 日本ストア',
+          hd_btn_free: 'BOOTH ¥0 無料スターター',
+          of_tag: 'VTuber・配信画面オーバーレイ向け',
+          of_ver: 'v1.0 NEW',
+          of_desc: 'Photoshop不要。1920×1080の4シーン配信枠を自動生成し、透過切り抜きPNGとアニメーションHTMLをワンクリック出力。',
+          of_b1: '✓ <strong>4シーン完全対応</strong>：待機画面、雑談画面、ゲーム16:9透過枠、終了画面',
+          of_b2: '✓ <strong>4種のオリジナルテーマ</strong>：桜ねこ、紅蓮メカ、星光の魔導書、レトロアーケード',
+          of_b3: '✓ <strong>2形式ワンクリック出力</strong>：アニメーションOBS <code>.html</code> + 透過 <code>1920×1080 .png</code>',
+          of_b4: '✓ 日・中・英3言語UI対応 + 商用配信ライセンス付き',
+          of_price: '$12 <span>買い切り（BOOTH ¥1,800）</span>',
+          of_btn_itch: 'itch.io で購入 ($12)',
+          of_btn_payhip: 'Payhip ($12)',
+          of_btn_booth: 'BOOTH 日本ストア (¥1,800)',
+          ct_tag: 'YouTube・Twitch ライブチャット向け',
+          ct_ver: 'v1.0 NEW',
+          ct_desc: '視聴者・メンバー・モデレーター・配信者・スパチャを再現できるライブシミュレーター付きOBSチャットCSSジェネレーター。',
+          ct_b1: '✓ <strong>6種のデザイナーテーマ</strong>：桜リボン、サイバーHUD、すりガラス、レトロRPG、カフェ紙面、ネオン漫画',
+          ct_b2: '✓ <strong>YouTube Live + Twitch / StreamElements</strong> 実DOMセレクタ標準内蔵',
+          ct_b3: '✓ <strong>即コピペ用 .CSS プリセット6種</strong>を同梱、10秒でOBS導入完了',
+          ct_b4: '✓ 100%オフライン直感スライダー（透過度・角丸・アニメーション・30秒フェード）',
+          ct_price: '$10 <span>買い切り（BOOTH ¥1,500）</span>',
+          ct_btn_itch: 'itch.io で購入 ($10)',
+          ct_btn_payhip: 'Payhip ($10)',
+          ct_btn_booth: 'BOOTH 日本ストア (¥1,500)',
+          ur_tag: 'VTuber 歌枠・カラオケ配信向け',
+          ur_ver: 'v1.0 NEW',
+          ur_desc: 'オフラインOBS歌枠セトリ表示 + OBSカスタムブラウザドック操作 + YouTubeチャプタータイムスタンプ一括生成。',
+          ur_b1: '✓ <strong>OBSライブ操作ドック</strong>：配信中にイコライザー＆自動スクロール付きで「歌唱中」を切替',
+          ur_b2: '✓ <strong>YouTubeタイムスタンプ一括出力</strong>：曲の開始時刻（<code>00:00 1. 曲名 / アーティスト</code>）を概要欄用に自動記録',
+          ur_b3: '✓ <strong>完全オフライン4テーマ×2レイアウト</strong>：桜ステージ、サイバーライブ、星光アコースティック、レトロカラオケ',
+          ur_b4: '✓ BOOTHにて無料「桜・歌唱中ミニ版」配布中 + 商用配信ライセンス付き',
+          ur_price: '$12 <span>買い切り（BOOTH ¥1,800 / ¥0 ミニ版）</span>',
+          ur_btn_itch: 'itch.io で購入 ($12)',
+          ur_btn_payhip: 'Payhip ($12)',
+          ur_btn_booth: 'BOOTH 日本ストア (¥1,800)',
+          ur_btn_free: 'BOOTH ¥0 無料歌枠ミニ版',
+          ks_tag: 'YouTuber・動画編集者向け',
+          ks_ver: 'v2.0 NEW',
+          ks_desc: 'Windows (.exe) / macOS対応のオフライン字幕編集スタジオ。CPS品質チェック、自動分割、同期、バイリンガル結合を一括処理。',
+          ks_b1: '✓ <strong>Netflix / YouTube CPS品質チェック</strong> &amp; <strong>スマート自動分割</strong>',
+          ks_b2: '✓ <strong>スタイル付き2言語 .ASS 書き出し</strong>（2言語をきれいに自動整列）',
+          ks_b3: '✓ <strong>固有名詞辞書の一括置換</strong> &amp; 左右比較の<strong>ビジュアル差分表示</strong>',
+          ks_b4: '✓ 基本機能は無料 + 100%オフライン動作で台本データが外部に漏れません',
+          ks_price: '無料 <span>/ $19 Pro 買い切り</span>',
+          ks_btn_itch: 'itch.io で v2.0 をダウンロード (Win & Mac)',
+          ks_btn_payhip: 'Payhip で永久Pro版を解放 ($19)',
+          rs_tag: 'データ分析・B2B営業・EC運用向け',
+          rs_ver: 'v2.0 NEW',
+          rs_desc: 'Webページ上のHTMLテーブルや商品・企業リストを自動検出し、Excel (.xlsx) やCSVへワンクリックで綺麗に書き出し。',
+          rs_b1: '✓ <strong>B2Bリスト収集・ECプリセット搭載</strong>：Googleマップ、Amazon/Shopee、求人サイト対応',
+          rs_b2: '✓ <strong>自動重複削除</strong> &amp; 複数ページ統合でクリーンなリストを作成',
+          rs_b3: '✓ <strong>ワンクリック Excel (.XLSX) &amp; UTF-8 CSV 出力</strong>（数値・価格の自動整形付き）',
+          rs_b4: '✓ ブラウザ内100%ローカル処理 — トラッキングなし、外部サーバー送信なし',
+          rs_price: '無料 <span>/ $9 Pro 買い切り</span>',
+          rs_btn_payhip: 'RowSieve v2.0 Pro を購入 ($9)',
+          rs_btn_firefox: 'Firefox アドオンページ',
+          srv_tag: 'オーダーメイド制作 · スピード納品',
+          srv_h2: 'オリジナルのOBS配信環境や自動化ツールが必要ですか？',
+          srv_sub: '複雑な設定はお任せください。クリエイター・事務所・少人数チーム向けに、完全オフラインのカスタムVTuber OBSウィジェットやローカルPython/AI自動化ツールを受託制作します。',
+          pkg1_title: 'カスタム VTuber OBS ウィジェット',
+          pkg1_desc: '立ち絵やブランドカラーに合わせたオリジナルブラウザソース（目標バー、予定表、テロップ、通知、操作ドック等）を制作。',
+          pkg2_title: 'ブランド統一 OBS 配信パッケージ',
+          pkg2_desc: '統一デザインの複数ウィジェット + 1920×1080 予定表ジェネレーター + Twitch / YouTube / Kick 導入ガイド付き。',
+          pkg3_title: 'ローカル Python / AI 自動化ツール',
+          pkg3_desc: '字幕処理パイプライン、B2Bリスト/テーブル抽出、ファイル一括処理、ローカルAI自動化などの専用スクリプトを開発。',
+          srv_note: '明朗な固定見積り（$35–$120 / ¥8,000〜）· ローカルソース一式納品 · メール＆BOOTH直接サポート',
+          srv_btn_booth: 'BOOTH オーダーメイド (¥8,000〜)',
+          srv_btn_email: '制作を相談する — rpee0812@gmail.com',
+          faq_h3: 'よくある質問・セキュリティについて',
+          faq_q1: 'Windowsで KirokuSub Pro（.exe）を実行すると SmartScreen の警告が出るのはなぜですか？',
+          faq_a1: '個人スタジオとして手頃な買い切り価格（$9〜$19）を維持するため、年間$400以上のEVコード署名証明書をまだ導入していません。Windowsでは<em>詳細情報 → 実行</em>をクリックして起動いただくか、オープンなPython版（macOS/Linux）をご利用ください。テレメトリ送信なし・100%オフライン動作です。',
+          faq_q2: '月額や年額のサブスクリプション料金はかかりますか？',
+          faq_a2: 'いいえ、一切かかりません。すべてのProライセンスは買い切り型で、ローカル環境での永久利用と無料アップデートが含まれます。',
+          faq_q3: 'サポートへの問い合わせやオーダーメイドの相談方法は？',
+          faq_a3: '<a href="mailto:rpee0812@gmail.com" style="color:#a5b4fc">rpee0812@gmail.com</a> までお気軽にメールでご連絡ください。迅速にご返信いたします。',
+          footer: '© 2026 HoshiDesk Studio · プライバシー最優先設計 · お問い合わせ: <a href="mailto:rpee0812@gmail.com">rpee0812@gmail.com</a>'
+        }
+      };
+
+      const STORAGE_KEY = 'hoshidesk_lang';
+      const buttons = document.querySelectorAll('.lang-btn[data-lang]');
+
+      function normalizeLang(raw) {
+        if (!raw) return 'en';
+        const lower = String(raw).toLowerCase();
+        if (lower.startsWith('zh')) return 'zh-TW';
+        if (lower.startsWith('ja')) return 'ja';
+        return 'en';
+      }
+
+      function applyLang(lang, persist) {
+        const code = I18N[lang] ? lang : 'en';
+        const dict = I18N[code];
+        document.documentElement.lang = code;
+        if (dict._title) document.title = dict._title;
+
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          const key = el.getAttribute('data-i18n');
+          if (Object.prototype.hasOwnProperty.call(dict, key)) {
+            el.textContent = dict[key];
+          }
+        });
+
+        document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+          const key = el.getAttribute('data-i18n-html');
+          if (Object.prototype.hasOwnProperty.call(dict, key)) {
+            el.innerHTML = dict[key];
+          }
+        });
+
+        buttons.forEach(function (btn) {
+          const active = btn.getAttribute('data-lang') === code;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+
+        if (persist) {
+          try { localStorage.setItem(STORAGE_KEY, code); } catch (_) {}
+        }
+      }
+
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          applyLang(btn.getAttribute('data-lang'), true);
+        });
+      });
+
+      let initial = null;
+      try {
+        const urlLang = new URLSearchParams(window.location.search).get('lang');
+        if (urlLang) initial = normalizeLang(urlLang);
+      } catch (_) {}
+      if (!initial) {
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (saved && I18N[saved]) initial = saved;
+        } catch (_) {}
+      }
+      if (!initial) {
+        initial = normalizeLang(navigator.language || navigator.userLanguage || 'en');
+      }
+      applyLang(initial, false);
+    })();
+  </script>
 </body>
 </html>
